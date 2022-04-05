@@ -1,0 +1,1 @@
+// This is the user's profile page where they can update their profile and upload pictures of their pets and view a single post if they click on one
