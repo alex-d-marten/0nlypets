@@ -18,6 +18,11 @@ const commentSchema = new Schema(
             type: String,
             required: true
         }
+    },
+    {
+        toJSON: {
+            getters: true
+        }
     }
 );
 
