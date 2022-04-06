@@ -9,22 +9,50 @@ const typeDefs = gql`
   }
 
   type Post {
-    postId: ID!
+    _id: ID
     petName: String
     caption: String
     image: String
+    createdAt: String
+    username: String
+    comments: [Comment]
+    likeCount: Int
+    likes: [Like]
   }
+
+  type Comment {
+      _id: ID
+      commentBody: String
+      createdAt: String    
+      username: String  
+  }
+
+  type Like {
+      _id: ID
+      createdAt: String    
+      username: String  
+  }
+
   type Query {
-    me: [User]
-    posts: [Post]
+    me: User
+    users: [User]
+    user(username: String!): User
+    posts(username: String): [Post]
+    post(_id: ID!): Post
+    comments(username: String): [Comment]
+    comment(_id: ID!): Comment
+    likes(username: String): [Like]
+    like(_id: ID!): Like
   }
+
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
     addPost(petName:String!, caption: String!, image: Upload): Post
-
-    removePost(postId:ID!)
-
-
+    addComment(commentId: ID!, commentBody: String!): Comment
+    addLike(likeId: ID!): Like
+    removePost(postId:ID!)?
   }
 `;
+
+module.exports = typeDefs;
