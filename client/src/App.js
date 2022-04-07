@@ -15,6 +15,12 @@ function App() {
       currentPage={currentPage}
       setCurrentPage={setCurrentPage}
       ></Header>
+      <section className='main-section'>
+
+        {/* Put all pages in this section tag */}
+
+      </section>
+      <Footer></Footer>
     </div>
   );
 }
