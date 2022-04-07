@@ -17,7 +17,7 @@ function App() {
       ></Header>
       <section className='main-section'>
 
-        {/* Put all pages in this section tag */}
+        {/* Put all pages in between this section tag */}
 
       </section>
       <Footer></Footer>

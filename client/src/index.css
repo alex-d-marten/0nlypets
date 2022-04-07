@@ -17,7 +17,8 @@ code {
 }
 
 /* component styles */
-.top-header{
+.top-header,
+.footer-div{
   background-color: aqua;
   padding: 1rem 2rem;
 }
@@ -63,4 +64,16 @@ code {
 .nav-active{
   color: rgb(45, 113, 240);
   border-bottom: 2px rgb(45, 113, 240) solid !important;
+}
+
+.main-section{
+  min-height: calc(100vh - 96.38px - 96px);
+}
+
+.footer-div{
+  text-align: center;
+}
+
+.footer-text{
+  font-size: 1.2rem;
 }
