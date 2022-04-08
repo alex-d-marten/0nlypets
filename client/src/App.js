@@ -1,23 +1,28 @@
+import React, {useState} from 'react';
+import './App.css';
+// component import
+import Header from './components/Header';
+import Footer from './components/Footer';
 import logo from "./logo.svg";
-import "./App.css";
+
 
 function App() {
+  // keeps track of which link in the Nav has been clicked
+  // and is currently active.
+  const [currentPage, setCurrentPage] = useState('Start');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header
+      currentPage={currentPage}
+      setCurrentPage={setCurrentPage}
+      ></Header>
+      <section className='main-section'>
+
+        {/* Put all pages in between this section tag */}
+
+      </section>
+      <Footer></Footer>
     </div>
   );
 }
