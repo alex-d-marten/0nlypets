@@ -19,7 +19,7 @@ const startServer = async () => {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: authMiddleware,
+    // context: authMiddleware,
   });
   
   await server.start();

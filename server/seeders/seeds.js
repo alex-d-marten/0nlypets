@@ -22,6 +22,56 @@ db.once('open', async () => {
 
     // creating the friends for users
     for (let i = 0; i < 100; i += 1) {
+        const randomUserIndex = Math.floor(Math.random() * createdUsers.ops.length);
+        const { _id: userId } = createdUsers.ops[randomUserIndex];
 
+        let friendId = userId;
+
+        while (friendId === userId) {
+        const randomUserIndex = Math.floor(Math.random() * createdUsers.ops.length);
+        friendId = createdUsers.ops[randomUserIndex];
+        }
+
+        await User.updateOne({ _id: userId }, { $addToSet: { friends: friendId } });
     }
+
+    // create posts
+    let createdPosts = [];
+    for (let i = 0; i < 100; i += 1) {
+        const postPetName = faker.lorem.words(1);
+        const postCaption = faker.lorem.words(5);
+        const postImage = faker.lorem.words(30);
+
+        const randomUserIndex = Math.floor(Math.random() * createdUsers.ops.length);
+        const { username, _id: userId } = createdUsers.ops[randomUserIndex];
+
+        const createdPost = await Post.create({ postPetName, postCaption, postImage, username }); 
+
+        const updatedUser = await User.updateOne(
+            { _id: userId },
+            { $push: { posts: createdPost._id } }
+        );
+
+        createdPosts.push(createdPost)
+    }
+
+    // Create comments
+    for (let i = 0; i< 100; i += 1) {
+        const commentBody = faker.lorem.words(10);
+
+        const randomUserIndex = Math.floor(Math.random() * createdUsers.ops.length);
+        const { username } = createdUsers.ops[randomUserIndex];
+
+        const randomPostIndex = Math.floor(Math.random() * createdPosts.length);
+        const { _id: postId } = createdPosts[randomPostIndex];
+
+        await Post.updateOne(
+            { _id: postId },
+            { $push: { comments: { commentBody, username } } },
+            { runValidators: true }
+        );
+    }
+
+    console.log('Seeding completed!')
+    process.exit(0);
 })
