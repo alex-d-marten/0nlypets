@@ -13,7 +13,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      match: [/.+@.+\..+/, "Must match an email address!"],
+      match: [/.+@.+\..+/, "Must match an email address (test@test.com)!"],
     },
     password: {
       type: String,
@@ -23,17 +23,21 @@ const userSchema = new Schema(
     posts: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Posts",
+        ref: "Post",
       },
     ],
     friends: [
       {
         type: Schema.Types.ObjectId,
         ref: "User",
-      },
-    ],
+      }
+    ]
   },
-
+  {
+    toJSON: {
+      virtuals: true
+    }
+  }
 );
 
 // set up pre-save middleware to create password
@@ -51,7 +55,9 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-
+userSchema.virtual('friendCount').get(function() {
+  return this.friends.length;
+});
 
 const User = model("User", userSchema);
 
