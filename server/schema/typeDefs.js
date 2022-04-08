@@ -22,7 +22,7 @@ const typeDefs = gql`
 
   type Comment {
       _id: ID
-      commentBody: String
+      commentText: String
       createdAt: String    
       username: String  
   }
@@ -49,7 +49,7 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
     addPost(petName:String!, caption: String!, image: String): Post
-    addComment(commentId: ID!, commentBody: String!): Comment
+    addComment(commentId: ID!, commentText: String!): Comment
     addLike(likeId: ID!): Like
     removePost(postId:ID!)
   }
