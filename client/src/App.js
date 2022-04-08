@@ -3,6 +3,8 @@ import './App.css';
 // component import
 import Header from './components/Header';
 import Footer from './components/Footer';
+import logo from "./logo.svg";
+
 
 function App() {
   // keeps track of which link in the Nav has been clicked
