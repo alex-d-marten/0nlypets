@@ -26,4 +26,4 @@ const commentSchema = new Schema(
     }
 );
 
-module.exports = Comment;
+module.exports = commentSchema;

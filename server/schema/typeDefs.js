@@ -33,6 +33,12 @@ const typeDefs = gql`
       username: String  
   }
 
+  type Auth{
+    token: ID!
+    user: User
+}
+
+
   type Query {
     me: User
     users: [User]
@@ -49,9 +55,11 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
     addPost(petName:String!, caption: String!, image: String): Post
-    addComment(commentId: ID!, commentBody: String!): Comment
+    addComment(commentId: ID!, commentText: String!): Comment
+    removeComment(commentId: ID!, commentText: String!): Post
     addLike(likeId: ID!): Like
-    removePost(postId:ID!)
+    removePost(postId:ID!) : User
+    updatePost(petName:String!, caption: String!, image: String): Post
   }
 `;
 
