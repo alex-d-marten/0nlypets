@@ -74,12 +74,12 @@ const resolvers = {
 
     removePost: async (parent, args, context) => {
       if (context.user) {
-        const updatedPost = await User.findOneAndUpdate(
+        const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
           { $pull: { posts: post_id } },
           { new: true }
         );
-        return updatedPost;
+        return updatedUser;
       }
       throw new AuthenticationError("You need to be logged in");
     },
