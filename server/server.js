@@ -16,10 +16,17 @@ const app = express();
 
 const startServer = async () => {
   // create a new Apollo server and pass in our schema data
+<<<<<<< HEAD
   const server = new ApolloServer({
     typeDefs,
     resolvers,
     // context: authMiddleware,
+=======
+  const server = new ApolloServer({ 
+    typeDefs, 
+    resolver, 
+    context: authMiddleware 
+>>>>>>> 0f9f435322eb4400c2644653267bb21b92060ca2
   });
 
   // Start the Apollo server
