@@ -38,14 +38,14 @@ db.once('open', async () => {
     // create posts
     let createdPosts = [];
     for (let i = 0; i < 100; i += 1) {
-        const postPetName = faker.lorem.words(1);
-        const postCaption = faker.lorem.words(5);
-        const postImage = faker.lorem.words(30);
+        const petName = faker.lorem.words(1);
+        const caption = faker.lorem.words(5);
+        const image = faker.lorem.words(30);
 
         const randomUserIndex = Math.floor(Math.random() * createdUsers.ops.length);
         const { username, _id: userId } = createdUsers.ops[randomUserIndex];
 
-        const createdPost = await Post.create({ postPetName, postCaption, postImage, username }); 
+        const createdPost = await Post.create({ petName, caption, image, username }); 
 
         const updatedUser = await User.updateOne(
             { _id: userId },
@@ -57,7 +57,7 @@ db.once('open', async () => {
 
     // Create comments
     for (let i = 0; i< 100; i += 1) {
-        const commentBody = faker.lorem.words(10);
+        const commentText = faker.lorem.words(10);
 
         const randomUserIndex = Math.floor(Math.random() * createdUsers.ops.length);
         const { username } = createdUsers.ops[randomUserIndex];
@@ -67,7 +67,7 @@ db.once('open', async () => {
 
         await Post.updateOne(
             { _id: postId },
-            { $push: { comments: { commentBody, username } } },
+            { $push: { comments: { commentText, username } } },
             { runValidators: true }
         );
     }
