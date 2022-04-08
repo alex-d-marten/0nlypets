@@ -6,7 +6,7 @@ const { ApolloServer } = require("apollo-server-express");
 const path = require("path");
 
 // get schemas for type defs and reslovers
-const { typeDefs, resolvers } = require("./schemas");
+const { typeDefs, resolvers } = require("./schema");
 
 const db = require("./config/connection");
 const { authMiddleware } = require("./utils/auth");
@@ -29,6 +29,8 @@ const startServer = async () => {
 
   console.log(`Use GraphQL at http://localhost${PORT}${server.graphqlPath}`);
 }
+
+startServer();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
