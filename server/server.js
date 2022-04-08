@@ -27,8 +27,10 @@ const startServer = async () => {
   console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
 };
 
-// Initialize the Apollo server
 startServer();
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
