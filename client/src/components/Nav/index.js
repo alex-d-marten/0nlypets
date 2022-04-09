@@ -6,7 +6,7 @@ function Nav({ currentPage, setCurrentPage }) {
           onClick={() => setCurrentPage("Home")}
           className={currentPage === "Home" ? "nav-active" : ""}
         >
-          Profile
+          Home
         </li>
         <li
           onClick={() => setCurrentPage("Profile")}

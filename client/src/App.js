@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import "./App.css";
 // component import
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -9,8 +15,20 @@ import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 //import logo from "./logo.svg";
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem("id_token");
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
+const httpLink = createHttpLink({
+  uri: "/graphql",
+});
 const client = new ApolloClient({
-  // link: authLink.concat(httpLink),
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 
