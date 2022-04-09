@@ -128,7 +128,7 @@ const resolvers = {
           { _id: postId },
           {
             $push: {
-              comment: { commentText, username: context.user.username },
+              comments: { commentText, username: context.user.username },
             },
           },
           { new: true, runValidators: true }
