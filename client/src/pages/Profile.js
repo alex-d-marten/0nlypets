@@ -5,16 +5,20 @@ import { Redirect, useParams } from "react-router-dom";
 import PostForm from "../components/PostForm";
 import PostList from "../components/PostList";
 
-import { useQuery, useMutation } from "@apollo/client";
-import { QUERY_USER, QUERY_ME } from "../utils/queries";
-import { ADD_POST } from "../utils/mutations";
+import { useQuery } from "@apollo/client";
+import { QUERY_USER, QUERY_ME, QUERY_POST } from "../utils/queries";
+// import { ADD_POST } from "../utils/mutations";
 import Auth from "../utils/auth";
 
 const Profile = (props) => {
   const { username: userParam } = useParams();
 
-  const [addPost] = useMutation(ADD_POST);
+  //   const [addPost] = useMutation(ADD_POST);
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
+    variables: { username: userParam },
+  });
+
+  const { loading: loadingPosts, data: postData } = useQuery(QUERY_POST, {
     variables: { username: userParam },
   });
 
@@ -25,7 +29,7 @@ const Profile = (props) => {
     return <Redirect to="/profile" />;
   }
 
-  if (loading) {
+  if (loading || loadingPosts) {
     return <div>Loading...</div>;
   }
 
@@ -49,8 +53,8 @@ const Profile = (props) => {
       <div className="flex-row justify-space-between mb-3">
         <div className="col-12 mb-3 col-lg-8">
           <PostList
-            Post={user.posts}
-            title={`${user.username}'s pet posts...`}
+            posts={postData.posts}
+            title={`${userParam}'s pet posts...`}
           />
         </div>
       </div>

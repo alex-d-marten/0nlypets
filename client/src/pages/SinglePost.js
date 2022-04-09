@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 
-import Auth from "../utils/auth";
+//import Auth from "../utils/auth";
 import { useQuery } from "@apollo/client";
 import { QUERY_POST } from "../utils/queries";
 //I hate to say it but I have no idea where the props for this are coming from
