@@ -15,6 +15,7 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import SinglePost from "./pages/SinglePost"
 //import logo from "./logo.svg";
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("id_token");
@@ -61,7 +62,17 @@ function App() {
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
           ></Header>
-          <section className="main-section">{renderPage()}</section>
+          <section className="main-section">
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/signup" component={Signup} />
+              <Route exact path="/profile/:username?" component={Profile} />
+              <Route exact path="/post/:id" component={SinglePost} />
+
+              {/* <Route component={NoMatch} /> */}
+            </Switch>
+          </section>
           <Footer></Footer>
         </div>
       </Router>
