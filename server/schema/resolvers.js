@@ -106,12 +106,16 @@ const resolvers = {
     //     return Thought.findOneAndDelete({ _id: thoughtId });
     //   },
 
-    removeComment: async (parent, { thoughtId, commentId }) => {
-      return Thought.findOneAndUpdate(
-        { _id: thoughtId },
+    removeComment: async (parent, { postId, commentId }, context) => {
+      if (context.user) {
+        const updatedPost = await Post.findOneAndUpdate(
+        { _id: postId },
         { $pull: { comments: { _id: commentId } } },
         { new: true }
       );
+      return updatedPost;
+        }
+        throw new AuthenticationError("You need to be logged in");
     },
 
     updatePost: async (parent, args, context) => {
