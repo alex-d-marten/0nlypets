@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 import { useMutation } from "@apollo/client";
 import { ADD_POST } from "../../utils/mutations";
-import { REMOVE_POST } from "../../utils/mutations";
-import { QUERY_POST, QUERY_ME } from "../../utils/queries";
+//import { REMOVE_POST } from "../../utils/mutations";
+import { QUERY_POST } from "../../utils/queries";
 
 const PostForm = () => {
   const [formState, setFormState] = useState({
@@ -19,7 +19,7 @@ const PostForm = () => {
         const { posts } = cache.readQuery({ query: QUERY_POST });
 
         cache.writeQuery({
-          query: QUERY_POSTS,
+          query: QUERY_POST,
           data: { posts: [addPost, ...posts] },
         });
       } catch (e) {
@@ -28,26 +28,26 @@ const PostForm = () => {
     },
   });
   //   I don't think this is the correct way to do a remove post because it doesnt take the id, I think we should make a remove post function to
-  const [removePost, { error }] = useMutation(REMOVE_POST, {
-    update(cache, { data: { removePost } }) {
-      try {
-        const { posts } = cache.readQuery({ query: QUERY_POST });
+  //   const [removePost, { error }] = useMutation(REMOVE_POST, {
+  //     update(cache, { data: { removePost } }) {
+  //       try {
+  //         const { posts } = cache.readQuery({ query: QUERY_POST });
 
-        cache.writeQuery({
-          query: QUERY_POST,
-          data: { posts: [removePost, ...posts] },
-        });
-      } catch (e) {
-        console.error(e);
-      }
-    },
-  });
+  //         cache.writeQuery({
+  //           query: QUERY_POST,
+  //           data: { posts: [removePost, ...posts] },
+  //         });
+  //       } catch (e) {
+  //         console.error(e);
+  //       }
+  //     },
+  //   });
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const { data } = await addPost({
+      await addPost({
         variables: { ...formState },
       });
 

@@ -2,9 +2,9 @@
 import React from "react";
 import PostList from "../components/PostList";
 
-import Auth from "../utils/auth";
+//import Auth from "../utils/auth";
 import { useQuery } from "@apollo/client";
-import { QUERY_POST, QUERY_ME } from "../utils/queries";
+import { QUERY_POST } from "../utils/queries";
 
 const Home = () => {
   const { loading, data } = useQuery(QUERY_POST);
@@ -12,7 +12,7 @@ const Home = () => {
   //const { data: userData } = useQuery(QUERY_ME);
   const posts = data?.posts || [];
 
-  const loggedIn = Auth.loggedIn();
+  const loggedIn = true; //Auth.loggedIn();
 
   return (
     <main>
