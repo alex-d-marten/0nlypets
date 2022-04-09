@@ -79,8 +79,8 @@ const resolvers = {
         });
 
         await User.findByIdAndUpdate(
-          { _id: context.user.id },
-          { $push: { posts: post_id } },
+          { _id: context.user._id },
+          { $push: { posts: post._id } },
           { new: true }
         );
         return post;

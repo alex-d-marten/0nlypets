@@ -18,11 +18,11 @@ const typeDefs = gql`
 
   type Post {
     _id: ID
-    petName: String
-    caption: String
-    image: String
-    createdAt: String
-    username: String
+    petName: String!
+    caption: String!
+    image: String!
+    createdAt: String!
+    username: String!
     comments: [Comment]
     likeCount: Int
     likes: [Like]
@@ -61,7 +61,7 @@ const typeDefs = gql`
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    addPost(petName:String!, caption: String!, image: String): Post
+    addPost(petName:String!, caption: String!, image: String!): Post
     addComment(commentId: ID!, commentText: String!): Comment
     removeComment(commentId: ID!, commentText: String!): Post
     addLike(likeId: ID!): Like
