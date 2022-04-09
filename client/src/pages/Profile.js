@@ -10,7 +10,7 @@ import { QUERY_USER, QUERY_ME, QUERY_POST } from "../utils/queries";
 // import { ADD_POST } from "../utils/mutations";
 import Auth from "../utils/auth";
 
-const Profile = (props) => {
+const Profile = () => {
   const { username: userParam } = useParams();
 
   //   const [addPost] = useMutation(ADD_POST);

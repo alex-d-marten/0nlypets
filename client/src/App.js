@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import "./App.css";
 // component import
 import {
@@ -54,14 +55,16 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
-      <div>
-        <Header
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        ></Header>
-        <section className="main-section">{renderPage()}</section>
-        <Footer></Footer>
-      </div>
+      <Router>
+        <div>
+          <Header
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          ></Header>
+          <section className="main-section">{renderPage()}</section>
+          <Footer></Footer>
+        </div>
+      </Router>
     </ApolloProvider>
   );
 }
