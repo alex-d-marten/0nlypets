@@ -26,7 +26,7 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_POST = gql`
-  mutation addPost($caption: String!) {
+  mutation addPost($petName: String!, $caption: String!, $image: String!) {
     addPost(petName: $petName, caption: $caption, image: $image) {
       _id
       petName
@@ -34,6 +34,7 @@ export const ADD_POST = gql`
       image
       createdAt
       username
+      commentCount
       comments {
         _id
       }
@@ -42,9 +43,10 @@ export const ADD_POST = gql`
 `;
 
 export const ADD_COMMENT = gql`
-  mutation addComment($postId: ID!, $commentBody: String!) {
+  mutation addComment($postId: ID!, $commentText: String!) {
     addComment(postId: $postId, commentText: $commentText) {
       _id
+      commentCount
       comments {
         _id
         commentText
@@ -56,8 +58,8 @@ export const ADD_COMMENT = gql`
 `;
 
 export const REMOVE_POST = gql`
-  mutation removePost($id: ID!) {
-    removePost(id: $id) {
+  mutation removePost($postId: ID!) {
+    removePost(postId: $postId) {
       _id
       username
     }

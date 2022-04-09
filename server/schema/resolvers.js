@@ -93,7 +93,7 @@ const resolvers = {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { posts: post_id } },
+          { $pull: { posts: post._id } },
           { new: true }
         );
         return updatedUser;
@@ -128,7 +128,7 @@ const resolvers = {
           { _id: postId },
           {
             $push: {
-              comment: { commentText, username: context.user.username },
+              comments: { commentText, username: context.user.username },
             },
           },
           { new: true, runValidators: true }
