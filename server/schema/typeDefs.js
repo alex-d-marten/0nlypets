@@ -1,6 +1,14 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+  scalar Upload
+
+  type File {
+    filename: String!
+    mimetype: String!
+    encoding: String!
+  }
+
   type User {
     _id: ID
     username: String!
@@ -59,6 +67,7 @@ const typeDefs = gql`
     addLike(likeId: ID!): Like
     removePost(postId:ID!) : User
     updatePost(petName:String!, caption: String!, image: String): Post
+    singleUpload(file: Upload!): File!
   }
 `;
 

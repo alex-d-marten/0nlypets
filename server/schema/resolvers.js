@@ -1,6 +1,8 @@
 const { AuthenticationError } = require("apollo-server-express");
 const { User, Post } = require("../models");
 const { signToken } = require("../utils/auth");
+const { GraphQLUpload } = require("graphql-upload");
+const { finished } = require("stream/promises");
 
 const resolvers = {
   Query: {
@@ -31,7 +33,22 @@ const resolvers = {
     },
   },
 
+  Upload: GraphQLUpload,
+
   Mutation: {
+    singleUpload: async (parent, { file }) => {
+      const { createReadStream, filename, mimetype, encoding } = await file;
+      
+      // invoke the `createReadStream` as this will return a Readable stream.
+      const stream = createReadStream();
+
+      // not sure if we need this, guide says it is for demo purposes but will have to play with this to decide if we need it
+      const out = require("fs").createWriteStream("local-file-output.txt");
+      stream.pipe(out);
+      await finished(out);
+
+      return { filename, mimetype, encoding };
+    },
     addUser: async (parent, args) => {
       const user = await User.create(args);
       const token = signToken(user);
