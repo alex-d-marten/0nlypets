@@ -28,6 +28,7 @@ const resolvers = {
       const params = username ? { username } : {};
       return Post.find(params).sort({ createdAt: -1 });
     },
+    
     post: async (parent, { _id }) => {
       return Post.findOne({ _id });
     },
@@ -106,12 +107,16 @@ const resolvers = {
     //     return Thought.findOneAndDelete({ _id: thoughtId });
     //   },
 
-    removeComment: async (parent, { thoughtId, commentId }) => {
-      return Thought.findOneAndUpdate(
-        { _id: thoughtId },
+    removeComment: async (parent, { postId, commentId }, context) => {
+      if (context.user) {
+        const updatedPost = await Post.findOneAndUpdate(
+        { _id: postId },
         { $pull: { comments: { _id: commentId } } },
         { new: true }
       );
+      return updatedPost;
+        }
+        throw new AuthenticationError("You need to be logged in");
     },
 
     updatePost: async (parent, args, context) => {
@@ -128,7 +133,7 @@ const resolvers = {
           { _id: postId },
           {
             $push: {
-              comment: { commentText, username: context.user.username },
+              comments: { commentText, username: context.user.username },
             },
           },
           { new: true, runValidators: true }
