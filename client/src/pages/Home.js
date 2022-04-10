@@ -4,13 +4,14 @@ import PostList from "../components/PostList";
 
 //import Auth from "../utils/auth";
 import { useQuery } from "@apollo/client";
-import { QUERY_POST } from "../utils/queries";
+import { QUERY_POSTS } from "../utils/queries";
 
 const Home = () => {
-  const { loading, data } = useQuery(QUERY_POST);
+  const { loading, data } = useQuery(QUERY_POSTS);
   //this doesnt seem to be needed for the home page
   //const { data: userData } = useQuery(QUERY_ME);
   const posts = data?.posts || [];
+  console.log(data)
 
   const loggedIn = true; //Auth.loggedIn();
 

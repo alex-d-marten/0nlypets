@@ -6,7 +6,7 @@ import PostForm from "../components/PostForm";
 import PostList from "../components/PostList";
 
 import { useQuery } from "@apollo/client";
-import { QUERY_USER, QUERY_ME, QUERY_POST } from "../utils/queries";
+import { QUERY_USER, QUERY_ME } from "../utils/queries";
 // import { ADD_POST } from "../utils/mutations";
 import Auth from "../utils/auth";
 
@@ -17,22 +17,19 @@ const Profile = () => {
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
-
-  const { loading: loadingPosts, data: postData } = useQuery(QUERY_POST, {
-    variables: { username: userParam },
-  });
-
+  console.log(userParam, "pigu");
   const user = data?.me || data?.user || {};
 
   // redirect to personal profile page if username is yours
-  if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
-    return <Redirect to="/profile" />;
-  }
+  // if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
+  //   console.log(Auth.getProfile());
+  //   return <Redirect to="/profile" />;
+  // }
 
-  if (loading || loadingPosts) {
+  if (loading) {
     return <div>Loading...</div>;
   }
-
+  console.log(data, "yayaya");
   if (!user?.username) {
     return (
       <h4>
@@ -52,10 +49,7 @@ const Profile = () => {
 
       <div className="flex-row justify-space-between mb-3">
         <div className="col-12 mb-3 col-lg-8">
-          <PostList
-            posts={postData.posts}
-            title={`${userParam}'s pet posts...`}
-          />
+          <PostList title={`${userParam}'s pet posts...`} />
         </div>
       </div>
       <div className="mb-3">{!userParam && <PostForm />}</div>
