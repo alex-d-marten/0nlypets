@@ -66,7 +66,7 @@ const typeDefs = gql`
     addComment(postId: ID!, commentText: String!): Comment
     removeComment(postId: ID!, commentId: ID!): Post
     addLike(likeId: ID!): Like
-    removePost(postId:ID!) : User
+    removePost(postId:ID!): User
     updatePost(petName:String!, caption: String!, image: String): Post
     singleUpload(file: Upload!): File!
   }
