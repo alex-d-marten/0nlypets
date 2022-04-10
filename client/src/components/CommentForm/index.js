@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/client';
 import { ADD_COMMENT } from '../../utils/mutations';
 
 const CommentForm = ({ commentId }) => {
-    const [commentText, setBodt] = useState('');
+    const [commentText, setBody] = useState('');
     const [characterCount, setCharacterCount] = useState(0);
     const [addComment, { error }] = useMutation(ADD_COMMENT);
 
@@ -35,8 +35,8 @@ const CommentForm = ({ commentId }) => {
 
     return (
         <div>
-            <p className={`m-0 ${characterCount === 280 || error ? 'text-error' : ''}`}>
-                Character Count: {characterCount}/280
+            <p className={`m-0 ${characterCount === 400 || error ? 'text-error' : ''}`}>
+                Character Count: {characterCount}/400
                 {error && <span className="ml-2">Something went wrong...</span>}
             </p>
             <form
