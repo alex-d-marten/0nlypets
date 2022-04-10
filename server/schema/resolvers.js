@@ -9,7 +9,7 @@ const resolvers = {
     me: async (parent, args, context) => {
       if (context.user) {
         const userData = await User.findOne({ _id: context.user_id })
-          .select("__v -password")
+          .select("-__v -password")
           .populate("posts");
 
         return userData;
