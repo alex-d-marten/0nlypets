@@ -13,6 +13,19 @@ function Nav({ currentPage, setCurrentPage }) {
           </li>
         </Link>
         <Link
+          to={`/${
+            Auth.loggedIn() ? Auth.getProfile().data.username : ""
+          }/createpost/`}
+          className="text-dark"
+        >
+          <li
+            onClick={() => setCurrentPage("CreatePost")}
+            className={currentPage === "CreatePost" ? "nav-active" : ""}
+          >
+            Create Post
+          </li>
+        </Link>
+        <Link
           to={`/profile/${
             Auth.loggedIn() ? Auth.getProfile().data.username : ""
           }`}

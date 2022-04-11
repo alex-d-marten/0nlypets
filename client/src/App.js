@@ -16,6 +16,7 @@ import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import SinglePost from "./pages/SinglePost"
+import CreatePost from "./pages/CreatePost";
 //import logo from "./logo.svg";
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("id_token");
@@ -69,6 +70,7 @@ function App() {
               <Route exact path="/signup" component={Signup} />
               <Route exact path="/profile/:username?" component={Profile} />
               <Route exact path="/post/:id" component={SinglePost} />
+              <Route exact path="/:username?/createpost" component={CreatePost} />
 
               {/* <Route component={NoMatch} /> */}
             </Switch>

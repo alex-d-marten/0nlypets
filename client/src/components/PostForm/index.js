@@ -74,7 +74,7 @@ const PostForm = () => {
 
   return (
     <div>
-      <h3>What's on your techy mind?</h3>
+      <h3>Show us your cute animal pictures</h3>
 
       <p
         className={`m-0 ${
