@@ -5,9 +5,8 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_POST } from "../utils/queries";
 
-import { CommentForm } from '../../components/CommentForm';
-
-import { CommentList } from '../../components/CommentList';
+import  CommentForm  from "../components/CommentForm";
+import CommentList  from "../components/CommentList";
 //I hate to say it but I have no idea where the props for this are coming from
 const SinglePost = (props) => {
   const { id: postId } = useParams();
