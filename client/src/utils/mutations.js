@@ -12,7 +12,7 @@ export const LOGIN_USER = gql`
   }
 `;
 
-// graphql test passed 
+// graphql test passed
 export const ADD_USER = gql`
   mutation addUser($username: String!, $email: String!, $password: String!) {
     addUser(username: $username, email: $email, password: $password) {
@@ -61,6 +61,15 @@ export const REMOVE_POST = gql`
       username
     }
   }
+`;
+
+export const UPDATE_POST = gql`
+mutation updatePost($id: ID!) {
+  updatePost(id: $ID!) {
+    _id
+    username
+  }
+}
 `;
 
 export const REMOVE_USER = gql`
