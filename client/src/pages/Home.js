@@ -11,7 +11,6 @@ const Home = () => {
   //this doesnt seem to be needed for the home page
   //const { data: userData } = useQuery(QUERY_ME);
   const posts = data?.posts || [];
-  console.log(data)
 
   const loggedIn = true; //Auth.loggedIn();
 

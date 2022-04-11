@@ -17,7 +17,6 @@ const Profile = () => {
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
-  console.log(userParam, "pigu");
   const user = data?.me || data?.user || {};
 
   // redirect to personal profile page if username is yours
@@ -52,7 +51,7 @@ const Profile = () => {
           <PostList title={`${userParam}'s pet posts...`} />
         </div>
       </div>
-      <div className="mb-3">{!userParam && <PostForm />}</div>
+    
     </div>
   );
 };
