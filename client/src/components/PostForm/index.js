@@ -11,13 +11,14 @@ const PostForm = () => {
     image: "",
     caption: "",
   });
+
   const [characterCount, setCharacterCount] = useState(0);
 
   const [addPost, { error }] = useMutation(ADD_POST, {
     update(cache, { data: { addPost } }) {
       try {
         const { posts } = cache.readQuery({ query: QUERY_POSTS });
-        console.log(posts)
+        console.log(posts);
 
         cache.writeQuery({
           query: QUERY_POSTS,
@@ -28,10 +29,10 @@ const PostForm = () => {
       }
 
       const { me } = cache.readQuery({ query: QUERY_ME });
-      console.log(me)
+      console.log(me);
       cache.writeQuery({
-          query: QUERY_ME,
-          data: { me: { ...me, posts: [...me.posts, addPost] } }
+        query: QUERY_ME,
+        data: { me: { ...me, posts: [...me.posts, addPost] } },
       });
     },
   });
@@ -58,12 +59,6 @@ const PostForm = () => {
       await addPost({
         variables: { ...formState },
       });
-
-      setFormState({
-        petName: "",
-        image: "",
-        caption: "",
-      });
     } catch (err) {
       console.error(err);
     }
@@ -71,9 +66,17 @@ const PostForm = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-
+    if (name === "image") {
+      setFormState({
+        ...formState,
+        [name]: event.target.files[0],
+      });
+    }
     if (name === "caption" && value.length <= 280) {
-      setFormState({ ...formState, [name]: value });
+      setFormState({
+        ...formState,
+        [name]: value,
+      });
       setCharacterCount(value.length);
     } else if (name !== "caption") {
       setFormState({ ...formState, [name]: value });
@@ -108,6 +111,8 @@ const PostForm = () => {
 
         <div className="col-12">
           <input
+            type="file"
+            accept=".png, .jpg, .jpeg"
             name="image"
             placeholder="Upload a photo here"
             value={formState.image}

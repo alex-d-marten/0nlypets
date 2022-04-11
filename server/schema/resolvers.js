@@ -87,6 +87,7 @@ const resolvers = {
           { $push: { posts: post._id } },
           { new: true }
         );
+        console.log(post);
         return post;
       }
 
