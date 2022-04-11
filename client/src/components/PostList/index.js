@@ -5,19 +5,18 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_POSTS } from "../../utils/queries";
 
-
 const PostList = ({ title }) => {
   const { username: userParam } = useParams();
   const { loading, data } = useQuery(QUERY_POSTS, {
     variables: { username: userParam },
-  }); 
+  });
   if (loading) {
     return <div>Loading...</div>;
   }
   if (!data.posts.length) {
     return <h3>No Posts Yet</h3>;
   }
- 
+
   return (
     <div>
       <h3>{title}</h3>
@@ -33,7 +32,7 @@ const PostList = ({ title }) => {
             <div className="card-body">{post.createdAt}</div>
             <Link
               className="btn btn-primary btn-block btn-squared"
-              to={`/posts/${post._id}`}
+              to={`/post/${post._id}`}
             >
               Join the discussion on this thought.
             </Link>
