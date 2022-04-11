@@ -1,35 +1,42 @@
 import React, { useState } from 'react';
 
 import { useMutation } from '@apollo/client';
+
 import { ADD_COMMENT } from '../../utils/mutations';
 
-const CommentForm = ({ commentId }) => {
-    const [commentText, setBody] = useState('');
+
+const CommentForm = ({ postId }) => {
+    console.log(postId);
+    const [commentText, setCommentText] = useState('');
     const [characterCount, setCharacterCount] = useState(0);
+
     const [addComment, { error }] = useMutation(ADD_COMMENT);
 
-    // update state based on form input changes 
-    const handleChange = (event) => {
-        if (event.target.value.length <= 280) {
-            setBody(event.target.value);
-            setCharacterCount(event.target.value.length);
-        }
-    };
+    
 
     // submit form
     const handleFormSubmit = async (event) => {
         event.preventDefault();
 
         try {
-            await addComment({
-                variables: { commentText, commentId },
+            const { data } = await addComment({
+                variables: { postId, commentText },
             });
 
             // clear form value
-            setBody('');
+            setCommentText('');
+            console.log(data);
             setCharacterCount(0);
         } catch (e) {
             console.error(e)
+        }
+    };
+
+    // update state based on form input changes 
+    const handleChange = (event) => {
+        if (event.target.value.length <= 280) {
+            setCommentText(event.target.value);
+            setCharacterCount(event.target.value.length);
         }
     };
 
@@ -46,13 +53,13 @@ const CommentForm = ({ commentId }) => {
 
                 <textarea
                     placeholder="Add comment..."
-                    value={reactionBody}
+                    value={commentText}
                     className="form-input col-12 col-md-9"
                     onChange={handleChange}
                 ></textarea>
 
                 <button className="btn col-12 col-md-3" type="submit">
-                    Send
+                    Add
                 </button>
             </form>
 
