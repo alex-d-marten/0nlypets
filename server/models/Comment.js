@@ -9,14 +9,14 @@ const commentSchema = new Schema(
             minlength: 1,
             maxLength: 400
         },
+        username: {
+            type: String,
+            required: true
+        },
         createdAt: {
             type: Date,
             default: Date.now,
             get: timeStamp => dateFormat(timeStamp)
-        },
-        username: {
-            type: String,
-            required: true
         }
     },
     {
