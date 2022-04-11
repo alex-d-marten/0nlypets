@@ -67,13 +67,20 @@ code {
 }
 
 .main-section {
-  min-height: calc(100vh - 96.38px - 96px);
+  min-height: calc(100vh - 92.8px - 89.59px);
+  padding: 2rem;
 }
 
 .footer-div {
   text-align: center;
+  padding: 2rem;
 }
 
 .footer-text {
   font-size: 1.2rem;
+  margin: 0;
+}
+
+a{
+  text-decoration: none !important;
 }

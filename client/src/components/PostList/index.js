@@ -13,7 +13,7 @@ const PostList = ({ title }) => {
   if (loading) {
     return <div>Loading...</div>;
   }
-  if (!data.posts.length) {
+  if (!data?.posts.length) {
     return <h3>No Posts Yet</h3>;
   }
  
