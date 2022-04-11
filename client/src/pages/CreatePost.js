@@ -19,7 +19,6 @@ const CreatePost = () => {
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
-  console.log(userParam, "banana");
   const user = data?.me || data?.user || {};
 
   // redirect to personal profile page if username is yours
@@ -31,7 +30,6 @@ const CreatePost = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-  console.log(data, "cheesecake");
   if (!user?.username) {
     return (
       <h4>
