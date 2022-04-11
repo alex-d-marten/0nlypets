@@ -1,21 +1,17 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import PostForm from "../components/PostForm";
-import { ADD_POST } from "../utils/mutations";
 import { QUERY_USER } from "../utils/queries";
-import { useMutation } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
 
 //import Auth from "../utils/auth";
 import { useQuery } from "@apollo/client";
-import { QUERY_POST } from "../utils/queries";
 
 
 const CreatePost = () => {
 
     const { username: userParam } = useParams();
 
-     const [addPost] = useMutation(ADD_POST);
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });

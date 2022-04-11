@@ -39,22 +39,7 @@ function App() {
   // keeps track of which link in the Nav has been clicked
   // and is currently active.
   const [currentPage, setCurrentPage] = useState("Home");
-  const renderPage = () => {
-    if (currentPage === "Home") {
-      return <Home />;
-    }
-    if (currentPage === "Profile") {
-      return <Profile />;
-    }
-    if (currentPage === "Signup") {
-      return <Signup />;
-    }
-    if (currentPage === "Login") {
-      return <Login />;
-    }
-    return Home;
-  };
-
+  
   return (
     <ApolloProvider client={client}>
       <Router>
