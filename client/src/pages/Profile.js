@@ -52,7 +52,7 @@ const Profile = () => {
           <PostList title={`${userParam}'s pet posts...`} />
         </div>
       </div>
-      <div className="mb-3">{!userParam && <PostForm />}</div>
+    
     </div>
   );
 };
