@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_POSTS } from "../../utils/queries";
 
+
 const PostList = ({ title }) => {
   const { username: userParam } = useParams();
   const { loading, data } = useQuery(QUERY_POSTS, {
@@ -30,6 +31,12 @@ const PostList = ({ title }) => {
             <img src={post.image} />
             <p className="">{post.caption}</p>
             <div className="card-body">{post.createdAt}</div>
+            <Link
+              className="btn btn-primary btn-block btn-squared"
+              to={`/posts/${post._id}`}
+            >
+              Join the discussion on this thought.
+            </Link>
           </div>
         ))}
     </div>
