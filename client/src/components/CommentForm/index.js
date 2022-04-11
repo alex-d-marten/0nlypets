@@ -1,28 +1,32 @@
 import React, { useState } from "react";
-
 import { useMutation } from "@apollo/client";
-
 import { ADD_COMMENT } from "../../utils/mutations";
+import { useParams } from "react-router-dom";
 
-const CommentForm = ({ postId }) => {
-  console.log(postId);
+const CommentForm = () => {
+  const { id: postId } = useParams();
   const [commentText, setCommentText] = useState("");
   const [characterCount, setCharacterCount] = useState(0);
-
+  console.log(postId);
   const [addComment, { error }] = useMutation(ADD_COMMENT);
-
+  const handleChange = (event) => {
+    if (event.target.value.length <= 280) {
+      setCommentText(event.target.value);
+      setCharacterCount(event.target.value.length);
+    }
+  };
   // submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     try {
       const { data } = await addComment({
-        variables: { postId, commentText },
+        variables: { postId,commentText },
       });
 
       // clear form value
       setCommentText("");
-      console.log(data);
+      console.log(data.postId);
       setCharacterCount(0);
     } catch (e) {
       console.error(e);
@@ -30,12 +34,6 @@ const CommentForm = ({ postId }) => {
   };
 
   // update state based on form input changes
-  const handleChange = (event) => {
-    if (event.target.value.length <= 280) {
-      setCommentText(event.target.value);
-      setCharacterCount(event.target.value.length);
-    }
-  };
 
   return (
     <div>

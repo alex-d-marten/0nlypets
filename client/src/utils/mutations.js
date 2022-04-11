@@ -12,7 +12,7 @@ export const LOGIN_USER = gql`
   }
 `;
 
-// graphql test passed 
+// graphql test passed
 export const ADD_USER = gql`
   mutation addUser($username: String!, $email: String!, $password: String!) {
     addUser(username: $username, email: $email, password: $password) {
@@ -48,6 +48,7 @@ export const ADD_COMMENT = gql`
       comments {
         _id
         commentText
+        username
         createdAt
       }
     }
