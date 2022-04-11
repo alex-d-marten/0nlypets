@@ -69,6 +69,7 @@ code {
 .main-section {
   min-height: calc(100vh - 92.8px - 89.59px);
   padding: 2rem;
+  position: relative;
 }
 
 .footer-div {
@@ -83,4 +84,25 @@ code {
 
 a{
   text-decoration: none !important;
+}
+
+.submit-btn{
+  padding: .75rem 3rem;
+  background-color: aqua;
+  font-weight: bold;
+  transition: background-color .5s;
+}
+
+.submit-btn:hover{
+  background-color: rgb(9, 218, 218);
+}
+
+.login-main{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.left-margin{
+  margin-left: 2rem;
 }
