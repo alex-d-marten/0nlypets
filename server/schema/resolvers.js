@@ -139,7 +139,7 @@ const resolvers = {
               comments: { commentText, username: context.user.username },
             },
           },
-          { new: true, runValidators: true }
+          { new: true }
         );
 
         console.log(postId);

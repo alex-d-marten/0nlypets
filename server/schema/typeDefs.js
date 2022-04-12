@@ -52,7 +52,7 @@ const typeDefs = gql`
     user(username: String!): User
     posts(username: String): [Post]
     post(_id: ID!): Post
-    comments(username: String): [Comment]
+    comments(_id: ID!): [Comment]
     comment(_id: ID!): Comment
     likes(username: String): [Like]
     like(_id: ID!): Like
