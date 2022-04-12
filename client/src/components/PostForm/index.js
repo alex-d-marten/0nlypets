@@ -31,7 +31,7 @@ const PostForm = () => {
       console.log(me)
       cache.writeQuery({
           query: QUERY_ME,
-          data: { me: { ...me, posts: [...me.posts, addPost] } }
+          data: { me: { ...me, posts: [...me.posts, addPost] } },
       });
     },
   });
