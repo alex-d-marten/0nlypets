@@ -34,7 +34,7 @@ const httpLink = createHttpLink({
   uri: "/graphql",
 });
 const client = new ApolloClient({
-  link: uploadLink,
+  link: authLink.concat(uploadLink),
   cache: new InMemoryCache(),
 });
 
