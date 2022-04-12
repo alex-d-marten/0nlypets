@@ -9,14 +9,14 @@ const PostList = ({ title }) => {
   const { username: userParam } = useParams();
   const { loading, data } = useQuery(QUERY_POSTS, {
     variables: { username: userParam },
-  }); 
+  });
   if (loading) {
     return <div>Loading...</div>;
   }
   if (!data.posts.length) {
     return <h3>No Posts Yet</h3>;
   }
- 
+
   return (
     <div>
       <h3>{title}</h3>
@@ -30,6 +30,12 @@ const PostList = ({ title }) => {
             <img src={post.image} />
             <p className="">{post.caption}</p>
             <div className="card-body">{post.createdAt}</div>
+            <Link
+              className="btn btn-primary btn-block btn-squared"
+              to={`/post/${post._id}`}
+            >
+              Join the discussion on this thought.
+            </Link>
           </div>
         ))}
     </div>

@@ -10,7 +10,8 @@ const resolvers = {
       if (context.user) {
         const userData = await User.findOne(
           { _id: context.user._id },
-          { username: context.user.username })
+          { username: context.user.username }
+        )
           .select("__v")
           .populate("posts");
 
@@ -30,7 +31,7 @@ const resolvers = {
       const params = username ? { username } : {};
       return Post.find(params).sort({ createdAt: -1 });
     },
-    
+
     post: async (parent, { _id }) => {
       return Post.findOne({ _id });
     },
@@ -41,7 +42,7 @@ const resolvers = {
   Mutation: {
     singleUpload: async (parent, { file }) => {
       const { createReadStream, filename, mimetype, encoding } = await file;
-      
+
       // invoke the `createReadStream` as this will return a Readable stream.
       const stream = createReadStream();
 
@@ -96,7 +97,7 @@ const resolvers = {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { posts: post_id } },
+          { $pull: { posts: post._id } },
           { new: true }
         );
         return updatedUser;
@@ -112,23 +113,24 @@ const resolvers = {
     removeComment: async (parent, { postId, commentId }, context) => {
       if (context.user) {
         const updatedPost = await Post.findOneAndUpdate(
-        { _id: postId },
-        { $pull: { comments: { _id: commentId } } },
-        { new: true }
-      );
-      return updatedPost;
-        }
-        throw new AuthenticationError("You need to be logged in");
+          { _id: postId },
+          { $pull: { comments: { _id: commentId } } },
+          { new: true }
+        );
+        return updatedPost;
+      }
+      throw new AuthenticationError("You need to be logged in");
     },
 
     updatePost: async (parent, args, context) => {
-        if (context.user) {
-          return await Post.findByIdAndUpdate(context.user._id, args, { new: true });
-        }
-        throw new AuthenticationError('Not logged in');
-      },
+      if (context.user) {
+        return await Post.findByIdAndUpdate(context.user._id, args, {
+          new: true,
+        });
+      }
+      throw new AuthenticationError("Not logged in");
+    },
 
-    
     addComment: async (parent, { postId, commentText }, context) => {
       if (context.user) {
         const updatedPost = await Post.findOneAndUpdate(
@@ -138,8 +140,10 @@ const resolvers = {
               comments: { commentText, username: context.user.username },
             },
           },
-          { new: true, runValidators: true }
+          { new: true }
         );
+
+        console.log(postId);
 
         return updatedPost;
       }

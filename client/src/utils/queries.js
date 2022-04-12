@@ -2,13 +2,13 @@ import { gql } from "@apollo/client";
 
 export const QUERY_POST = gql`
   query post($_id: ID!) {
-    post(id: $_id) {
+    post(_id: $_id) {
       _id
       petName
       caption
+      image
       createdAt
       username
-      image
       comments {
         _id
         commentText
