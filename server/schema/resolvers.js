@@ -76,12 +76,13 @@ const resolvers = {
       return { token, user };
     },
     addPost: async (parent, args, context) => {
+      console.log(args,context.user)
       if (context.user) {
         const post = await Post.create({
           ...args,
           username: context.user.username,
         });
-
+       console.log(post)
         await User.findByIdAndUpdate(
           { _id: context.user._id },
           { $push: { posts: post._id } },

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_POSTS } from "../../utils/queries";
+import CommentList from "../CommentList";
 
 const PostList = ({ title }) => {
   const { username: userParam } = useParams();
@@ -30,12 +31,16 @@ const PostList = ({ title }) => {
             <img src={post.image} />
             <p className="">{post.caption}</p>
             <div className="card-body">{post.createdAt}</div>
+            <div>
+              {CommentList}
+            </div>
             <Link
               className="btn btn-primary btn-block btn-squared"
               to={`/post/${post._id}`}
             >
               Join the discussion on this thought.
             </Link>
+
           </div>
         ))}
     </div>

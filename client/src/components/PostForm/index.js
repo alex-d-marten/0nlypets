@@ -13,28 +13,36 @@ const PostForm = () => {
   });
   const [characterCount, setCharacterCount] = useState(0);
 
-  const [addPost, { error }] = useMutation(ADD_POST, {
-    update(cache, { data: { addPost } }) {
-      try {
-        const { posts } = cache.readQuery({ query: QUERY_POSTS });
-        console.log(posts)
+  const [addPost, { error }] = useMutation(ADD_POST)
 
-        cache.writeQuery({
-          query: QUERY_POSTS,
-          data: { posts: [addPost, ...posts] },
-        });
-      } catch (e) {
-        console.error(e);
-      }
+// got add post to stop giving error by getting rid of this block
+// also redirected to home after adding post 
+// will need to clean this up at the end
 
-      const { me } = cache.readQuery({ query: QUERY_ME });
-      console.log(me)
-      cache.writeQuery({
-          query: QUERY_ME,
-          data: { me: { ...me, posts: [...me.posts, addPost] } }
-      });
-    },
-  });
+  //    {
+  //   update(cache, { data: { addPost } }) {
+  //     try {
+  //       const { posts } = cache.readQuery({ query: QUERY_POSTS });
+  //       console.log(posts)
+
+  //       cache.writeQuery({
+  //         query: QUERY_POSTS,
+  //         data: { posts: [addPost, ...posts] },
+  //       });
+  //     } catch (e) {
+  //       console.error(e);
+  //     }
+
+  //     const { me } = cache.readQuery({ query: QUERY_ME });
+  //     console.log(me)
+  //     cache.writeQuery({
+  //         query: QUERY_ME,
+  //         data: { me: { ...me, posts: [...me.posts, addPost] } }
+  //     });
+  //   },
+  
+  
+  // });
   //   I don't think this is the correct way to do a remove post because it doesnt take the id, I think we should make a remove post function to
   //   const [removePost, { error }] = useMutation(REMOVE_POST, {
   //     update(cache, { data: { removePost } }) {
@@ -53,20 +61,21 @@ const PostForm = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
-    try {
+console.log(formState)
+   // try {
       await addPost({
         variables: { ...formState },
       });
-
+      // set location to home on submit
+       window.location.href="/"
       setFormState({
         petName: "",
         image: "",
         caption: "",
       });
-    } catch (err) {
-      console.error(err);
-    }
+    // } catch (err) {
+    //   console.error(err);
+    // }
   };
 
   const handleChange = (event) => {
@@ -126,15 +135,15 @@ const PostForm = () => {
           ></textarea>
         </div>
         <div className="col-12 col-lg-3">
-          <button className="btn btn-primary btn-block py-3" type="submit">
+          <button  className="btn btn-primary btn-block py-3" type="submit">
             Post Pic
           </button>
         </div>
-        {error && (
+        {/* {error && (
           <div className="col-12 my-3 bg-danger text-white p-3">
             Something went wrong...
           </div>
-        )}
+        )} */}
       </form>
     </div>
   );
