@@ -100,22 +100,12 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
-    removePost: async (parent, postId, context) => {
+    removePost: async (parent, { postId }, context) => {
       if (context.user) {
-        const updatedUser = await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { posts: { _id: postId } } },
-          { new: true }
-        );
-        return updatedUser;
+        return Post.findOneAndDelete({ _id: postId });
       }
-
-      throw new AuthenticationError("You need to be logged in");
+      throw new AuthenticationError("Not logged in");
     },
-    // In case removePost doesn't work, try this one
-    // removeThought: async (parent, { thoughtId }) => {
-    //     return Thought.findOneAndDelete({ _id: thoughtId });
-    //   },
 
     updatePost: async (parent, args, context) => {
       if (context.user) {
