@@ -4,7 +4,7 @@ function Nav({ currentPage, setCurrentPage }) {
   return (
     <div>
       <ul className="flex-container nav-list">
-        <Link to={`/`} className="text-dark">
+        <Link to={`/`} className="text-dark" style={{ textDecoration: 'none' }}>
           <li
             onClick={() => setCurrentPage("Home")}
             className={currentPage === "Home" ? "nav-active" : ""}
@@ -16,7 +16,7 @@ function Nav({ currentPage, setCurrentPage }) {
           to={`/${
             Auth.loggedIn() ? Auth.getProfile().data.username : ""
           }/createpost/`}
-          className="text-dark"
+          className="text-dark" style={{ textDecoration: 'none' }}
         >
           <li
             onClick={() => setCurrentPage("CreatePost")}
@@ -29,25 +29,25 @@ function Nav({ currentPage, setCurrentPage }) {
           to={`/profile/${
             Auth.loggedIn() ? Auth.getProfile().data.username : ""
           }`}
-          className="text-dark"
+          className="text-dark" style={{ textDecoration: 'none' }}
         >
           <li
             onClick={() => setCurrentPage("Profile")}
             className={currentPage === "Profile" ? "nav-active" : ""}
           >
-            Profile
+            Profile 
           </li>
         </Link>
         {/* <li onClick={()=>setCurrentPage('Add Post')} className={currentPage === 'Add Post' && 'nav-active'}>Add Post</li> */}
-        <Link to={`/login`} className="text-dark">
+        <Link to={`/login`} className="text-dark" style={{ textDecoration: 'none' }}>
           <li
             onClick={() => setCurrentPage("Login")}
             className={currentPage === "Login" ? "nav-active" : ""}
           >
-            Login
+           Login
           </li>
         </Link>
-        <Link to={`/signup`} className="text-dark">
+        <Link to={`/signup`} className="text-dark" style={{ textDecoration: 'none' }}>
           <li
             onClick={() => setCurrentPage("Signup")}
             className={currentPage === "Signup" ? "nav-active" : ""}
@@ -55,7 +55,7 @@ function Nav({ currentPage, setCurrentPage }) {
             Sign Up
           </li>
         </Link>
-        <Link to={`/logout`} className="text-dark">
+        <Link to={`/logout`} className="text-dark" style={{ textDecoration: 'none' }}>
           <li
             onClick={() => setCurrentPage("Logout")}
             className={currentPage === "Logout" ? "nav-active" : ""}
