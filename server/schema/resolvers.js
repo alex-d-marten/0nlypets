@@ -104,17 +104,19 @@ const resolvers = {
       if (context.user) {
         return Post.findOneAndDelete({ _id: postId });
       }
-      throw new AuthenticationError("Not logged in");
+      throw new AuthenticationError("You need to be logged in!");
     },
 
-    updatePost: async (parent, args, context) => {
-      if (context.user) {
-        return await Post.findByIdAndUpdate(context.user._id, args, {
-          new: true,
-        });
-      }
-      throw new AuthenticationError("Not logged in");
-    },
+    // updatePost: async (parent, { postId }, context) => {
+    //   // if (context.user) {
+    //     return User.findOneAndUpdate(
+    //       { _id: context.user._id },
+    //       { $push: { posts: postId } },
+    //       { new: true }
+    //     );
+    //   }
+    //   // throw new AuthenticationError("You need to be logged in!");
+    // },
 
     removeComment: async (parent, { postId, commentId }, context) => {
       if (context.user) {
