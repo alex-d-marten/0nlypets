@@ -73,13 +73,42 @@ a:hover {
 } */
 
 .main-section {
-  min-height: calc(100vh - 96.38px - 96px);
+  min-height: calc(100vh - 92.8px - 89.59px);
+  padding: 2rem;
+  position: relative;
 }
 
 .footer-div {
   text-align: center;
+  padding: 2rem;
 }
 
 .footer-text {
   font-size: 1.2rem;
+  margin: 0;
+}
+
+a{
+  text-decoration: none !important;
+}
+
+.submit-btn{
+  padding: .75rem 3rem;
+  background-color: aqua;
+  font-weight: bold;
+  transition: background-color .5s;
+}
+
+.submit-btn:hover{
+  background-color: rgb(9, 218, 218);
+}
+
+.login-main{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.left-margin{
+  margin-left: 2rem;
 }
