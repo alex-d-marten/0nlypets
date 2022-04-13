@@ -74,6 +74,15 @@ export const REMOVE_POST = gql`
   }
 `;
 
+export const UPDATE_POST = gql`
+  mutation updatePost($id: ID!) {
+    updatePost(id: $ID) {
+      _id
+      username
+    }
+  }
+`;
+
 export const REMOVE_USER = gql`
   mutation removeUser($id: ID!) {
     removeUser(id: $id) {
