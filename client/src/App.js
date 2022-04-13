@@ -30,19 +30,12 @@ const authLink = setContext((_, { headers }) => {
 });
 const uploadLink = createUploadLink({
   uri: "http://localhost:3001/graphql"});
-const httpLink = createHttpLink({
-  uri: "/graphql",
-});
 const client = new ApolloClient({
   link: authLink.concat(uploadLink),
   cache: new InMemoryCache(),
 });
 
 function App() {
-  // keeps track of which link in the Nav has been clicked
-  // and is currently active.
-  
-
   const [currentPage, setCurrentPage] = useState("Home");
   
   return (
