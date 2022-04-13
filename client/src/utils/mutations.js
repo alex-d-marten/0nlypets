@@ -41,6 +41,16 @@ export const ADD_POST = gql`
   }
 `;
 
+export const UPLOAD_FILE = gql`
+  mutation singleUpload($file: Upload!) {
+    singleUpload(file: $file) {
+      filename
+      mimetype
+      encoding
+    }
+  }
+`
+
 export const ADD_COMMENT = gql`
   mutation addComment($postId: ID!, $commentText: String!) {
     addComment(postId: $postId, commentText: $commentText) {
@@ -58,6 +68,15 @@ export const ADD_COMMENT = gql`
 export const REMOVE_POST = gql`
   mutation removePost($id: ID!) {
     removePost(id: $id) {
+      _id
+      username
+    }
+  }
+`;
+
+export const UPDATE_POST = gql`
+  mutation updatePost($id: ID!) {
+    updatePost(id: $ID) {
       _id
       username
     }

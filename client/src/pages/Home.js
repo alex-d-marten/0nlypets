@@ -25,6 +25,7 @@ const Home = () => {
             <PostList posts={posts} title="Cute pictures galore" />
           )}
         </div>
+        <div></div>
       </div>
     </main>
   );

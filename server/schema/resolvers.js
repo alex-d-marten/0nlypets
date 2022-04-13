@@ -17,16 +17,20 @@ const resolvers = {
 
         return userData;
       }
+
       throw new AuthenticationError("Not logged in");
     },
+
     users: async () => {
       return User.find().select("-__v -password").populate("posts");
     },
+
     user: async (parent, { username }) => {
       return User.findOne({ username })
         .select("-__v -password")
         .populate("posts");
     },
+
     posts: async (parent, { username }) => {
       const params = username ? { username } : {};
       return Post.find(params).sort({ createdAt: -1 });
@@ -47,18 +51,20 @@ const resolvers = {
       const stream = createReadStream();
 
       // not sure if we need this, guide says it is for demo purposes but will have to play with this to decide if we need it
-      const out = require("fs").createWriteStream("local-file-output.txt");
+      const out = require("fs").createWriteStream(`./uploadedFiles/${filename}`);
       stream.pipe(out);
       await finished(out);
 
       return { filename, mimetype, encoding };
     },
+
     addUser: async (parent, args) => {
       const user = await User.create(args);
       const token = signToken(user);
 
       return { token, user };
     },
+
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
@@ -75,14 +81,13 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+
     addPost: async (parent, args, context) => {
-      console.log(args,context.user)
       if (context.user) {
         const post = await Post.create({
           ...args,
           username: context.user.username,
         });
-       console.log(post)
         await User.findByIdAndUpdate(
           { _id: context.user._id },
           { $push: { posts: post._id } },
@@ -106,22 +111,29 @@ const resolvers = {
 
     removePost: async (parent, args, context) => {
       if (context.user) {
-        const updatedUser = await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { posts: post._id } },
-          { new: true }
-        );
-        return updatedUser;
+        return Post.findOneAndDelete({ _id: postId });
       }
-      throw new AuthenticationError("You need to be logged in");
+      throw new AuthenticationError("You need to be logged in!");
     },
 
-    // In case removePost doesn't work, try this one
-    // removeThought: async (parent, { thoughtId }) => {
-    //     return Thought.findOneAndDelete({ _id: thoughtId });
-    //   },
+    updatePost: async (parent, { postId, petName, caption }, context) => {
+      if (context.user) {
+        return Post.findOneAndUpdate(
+          { _id: postId },
+          { petName: petName, caption: caption },
+          { new: true }
+        );
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
 
-
+    removeComment: async (parent, { postId, commentId }) => {
+      return Post.findOneAndUpdate(
+        { _id: postId },
+        { $pull: { comments: { _id: commentId } } },
+        { new: true }
+      );
+    },
 
     addComment: async (parent, { postId, commentText }, context) => {
       if (context.user) {

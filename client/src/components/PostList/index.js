@@ -14,7 +14,7 @@ const PostList = ({ title }) => {
   if (loading) {
     return <div>Loading...</div>;
   }
-  if (!data.posts.length) {
+  if (!data?.posts.length) {
     return <h3>No Posts Yet</h3>;
   }
 
@@ -30,6 +30,8 @@ const PostList = ({ title }) => {
                   <Link to={`/profile/${post.username}`} className="text-dark">
                     {post.username}
                   </Link>
+                  {/* Jovial wants to add EDIT button here!!!!!! */}
+                  <Link to={`/post/${post._id}/editmode/`}>EDIT IT!!</Link>
                   <p className="card-header">{post.petName}</p>
                   <img
                     src={post.image}
