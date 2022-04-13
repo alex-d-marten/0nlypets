@@ -51,7 +51,7 @@ const resolvers = {
       const stream = createReadStream();
 
       // not sure if we need this, guide says it is for demo purposes but will have to play with this to decide if we need it
-      const out = require("fs").createWriteStream("local-file-output.txt");
+      const out = require("fs").createWriteStream(`./uploadedFiles/${filename}`);
       stream.pipe(out);
       await finished(out);
 
@@ -83,13 +83,11 @@ const resolvers = {
     },
 
     addPost: async (parent, args, context) => {
-      console.log(args, context.user);
       if (context.user) {
         const post = await Post.create({
           ...args,
           username: context.user.username,
         });
-        console.log(post);
         await User.findByIdAndUpdate(
           { _id: context.user._id },
           { $push: { posts: post._id } },
@@ -100,7 +98,6 @@ const resolvers = {
 
       throw new AuthenticationError("You need to be logged in!");
     },
-
     removePost: async (parent, { postId }, context) => {
       if (context.user) {
         return Post.findOneAndDelete({ _id: postId });
@@ -119,16 +116,12 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
-    removeComment: async (parent, { postId, commentId }, context) => {
-      if (context.user) {
-        const updatedPost = await Post.findOneAndUpdate(
-          { _id: postId },
-          { $pull: { comments: { _id: commentId } } },
-          { new: true }
-        );
-        return updatedPost;
-      }
-      throw new AuthenticationError("You need to be logged in");
+    removeComment: async (parent, { postId, commentId }) => {
+      return Post.findOneAndUpdate(
+        { _id: postId },
+        { $pull: { comments: { _id: commentId } } },
+        { new: true }
+      );
     },
 
     addComment: async (parent, { postId, commentText }, context) => {

@@ -5,8 +5,7 @@ import "./App.css";
 import {
   ApolloClient,
   InMemoryCache,
-  ApolloProvider,
-  createHttpLink,
+  ApolloProvider
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import Header from "./components/Header";
@@ -18,7 +17,7 @@ import Login from "./pages/Login";
 import SinglePost from "./pages/SinglePost";
 import CreatePost from "./pages/CreatePost";
 import UpdatePost from "./pages/UpdatePost";
-
+import { createUploadLink } from "apollo-upload-client";
 //import logo from "./logo.svg";
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("id_token");
@@ -29,17 +28,14 @@ const authLink = setContext((_, { headers }) => {
     },
   };
 });
-const httpLink = createHttpLink({
-  uri: "/graphql",
-});
+const uploadLink = createUploadLink({
+  uri: "http://localhost:3001/graphql"});
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: authLink.concat(uploadLink),
   cache: new InMemoryCache(),
 });
 
 function App() {
-  // keeps track of which link in the Nav has been clicked
-  // and is currently active.
   const [currentPage, setCurrentPage] = useState("Home");
 
   return (

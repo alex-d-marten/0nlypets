@@ -4,6 +4,8 @@ import { useMutation } from "@apollo/client";
 import { ADD_POST } from "../../utils/mutations";
 //import { REMOVE_POST } from "../../utils/mutations";
 import { QUERY_POSTS, QUERY_ME } from "../../utils/queries";
+import UploadImage from "../UploadImage";
+
 
 const PostForm = () => {
   const [formState, setFormState] = useState({
@@ -19,30 +21,28 @@ const PostForm = () => {
 // also redirected to home after adding post 
 // will need to clean this up at the end
 
-  //    {
-  //   update(cache, { data: { addPost } }) {
-  //     try {
-  //       const { posts } = cache.readQuery({ query: QUERY_POSTS });
-  //       console.log(posts)
+  const [addPost, { error }] = useMutation(ADD_POST, {
+    update(cache, { data: { addPost } }) {
+      try {
+        const { posts } = cache.readQuery({ query: QUERY_POSTS });
+        console.log(posts)
 
-  //       cache.writeQuery({
-  //         query: QUERY_POSTS,
-  //         data: { posts: [addPost, ...posts] },
-  //       });
-  //     } catch (e) {
-  //       console.error(e);
-  //     }
+        cache.writeQuery({
+          query: QUERY_POSTS,
+          data: { posts: [addPost, ...posts] },
+        });
+      } catch (e) {
+        console.error(e);
+      }
 
-  //     const { me } = cache.readQuery({ query: QUERY_ME });
-  //     console.log(me)
-  //     cache.writeQuery({
-  //         query: QUERY_ME,
-  //         data: { me: { ...me, posts: [...me.posts, addPost] } }
-  //     });
-  //   },
-  
-  
-  // });
+      const { me } = cache.readQuery({ query: QUERY_ME });
+      console.log(me)
+      cache.writeQuery({
+          query: QUERY_ME,
+          data: { me: { ...me, posts: [...me.posts, addPost] } },
+      });
+    },
+  });
   //   I don't think this is the correct way to do a remove post because it doesnt take the id, I think we should make a remove post function to
   //   const [removePost, { error }] = useMutation(REMOVE_POST, {
   //     update(cache, { data: { removePost } }) {
@@ -115,15 +115,7 @@ console.log(formState)
           />
         </div>
 
-        <div className="col-12">
-          <input
-            name="image"
-            placeholder="Upload a photo here"
-            value={formState.image}
-            className="form-input w-100"
-            onChange={handleChange}
-          />
-        </div>
+        <UploadImage></UploadImage>
         <div className="col-12">
           <textarea
             name="caption"
