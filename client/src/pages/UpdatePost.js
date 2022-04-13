@@ -1,45 +1,185 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { UPDATE_POST } from "../utils/mutations";
+import { QUERY_POSTS, QUERY_ME } from "../utils/queries";
 
 //import Auth from "../utils/auth";
 import { useQuery } from "@apollo/client";
 import { QUERY_POST } from "../utils/queries";
 
 //I hate to say it but I have no idea where the props for this are coming from
-const UpdatePost = (props) => {
-  const { id: postId } = useParams();
+// const UpdatePost = (props) => {
+// const { id: postId } = useParams();
 
-  const { loading, data } = useQuery(QUERY_POST, {
-    variables: { id: postId },
+// const { loading, data } = useQuery(QUERY_POST, {
+//   variables: { id: postId },
+// });
+
+// const post = data?.post || {};
+
+// if (loading) {
+//   return <div>Loading...</div>;
+// }
+const UpdatePost = () => {
+  const [formState, setFormState] = useState({
+    petName: "",
+    image: "",
+    caption: "",
+  });
+  const [characterCount, setCharacterCount] = useState(0);
+
+  const [updatePost, { error }] = useMutation(UPDATE_POST, {
+    update(cache, { data: { updatePost } }) {
+      try {
+        const { posts } = cache.readQuery({ query: QUERY_POSTS });
+        console.log(posts);
+
+        cache.writeQuery({
+          query: QUERY_POSTS,
+          data: { posts: [updatePost, ...posts] },
+        });
+      } catch (e) {
+        console.error(e);
+      }
+
+      const { me } = cache.readQuery({ query: QUERY_ME });
+      console.log(me);
+      cache.writeQuery({
+        query: QUERY_ME,
+        data: { me: { ...me, posts: [...me.posts, updatePost] } },
+      });
+    },
   });
 
-  const post = data?.post || {};
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    console.log(formState);
+    // try {
+    await updatePost({
+      variables: { ...formState },
+    });
+    // set location to home on submit
+    window.location.href = "/";
+    setFormState({
+      petName: "",
+      image: "",
+      caption: "",
+    });
+    // } catch (err) {
+    //   console.error(err);
+    // }
+  };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    if (name === "caption" && value.length <= 280) {
+      setFormState({ ...formState, [name]: value });
+      setCharacterCount(value.length);
+    } else if (name !== "caption") {
+      setFormState({ ...formState, [name]: value });
+    }
+  };
+
+  // class Form extends React.Component {
+  //   state = {
+  //     petName: "what?",
+  //     caption: "",
+  //     image: "",
+  //   };
+  // }
+
+  // const { petName, caption, image } = this.state;
 
   return (
     <div>
-      {/* <div className="card mb-3">
-        <p className="card-header">
-          <span style={{ fontWeight: 700 }} className="text-light">
-            {post.petName}
-          </span>
-        </p>
-        <div className="card-body">
-          <p>{post.image} </p>
-          <p> {post.caption} </p>
-          <p>{post.createdAt}</p>
+      {/* 
+      so I need a form. 
+      - which will shows my original caption and petName
+      - and the image is not changable
+      */}
+      <form
+        className="flex-row justify-center justify-space-between-md align-center"
+        onSubmit={handleFormSubmit}
+      >
+        <div>{/* Jovial needs the pic shows here */}</div>
+        <div className="col-12">
+          <input
+            name="petName"
+            placeholder=""
+            value={formState.petName}
+            className="form-input w-100"
+            onChange={handleChange}
+          />
         </div>
+        <div className="col-12">
+          <textarea
+            name="caption"
+            placeholder="Caption this photo..."
+            value={formState.caption}
+            className="form-input w-100"
+            style={{ lineHeight: "1.5" }}
+            onChange={handleChange}
+          ></textarea>
+        </div>
+        <div className="col-12 col-lg-3">
+          <button className="btn btn-primary btn-block py-3" type="submit">
+            DONE
+          </button>
+          <button className="btn btn-primary btn-block py-3" type="submit">
+            REMOVE THIS POST
+          </button>
+        </div>
+      </form>
 
-        <div><CommentForm comments = {post.comments} /></div>
-        
-        <div><CommentList postId={post._id} /></div>
-
-      </div> */}
+      {/* 
+      <form
+              className="flex-row justify-center justify-space-between-md align-center" onSubmit={handleFormSubmit}
+              >
+      <input
+            name="petName" 
+            id="petName" 
+            type="text"
+            value={post.petName}
+            placeholder={post.petName}
+            onChange={handleChange}
+          />
+        <input
+        name="caption" 
+        id="caption"
+        type="text"
+        value={post.caption}
+        placeholder={post.caption}
+        onChange={handleChange}
+      />
+      </form> */}
+      {/* <form class="edit-post-form">
+    <div>
+      <label name="post-title">{{post.post_title}}</label>
+      <input
+        name="post-title"
+        id="post-title"
+        type="text"
+        value="{{post.post_title}}"
+      />
+    </div>
+    <div>
+      <label name="post-text">{{post.post_text}}</label>
+      <input
+        name="post-text"
+        id="post-text"
+        type="text"
+        value="{{post.post_text}}"
+      />
+    </div>
+    {{#each post.comments as |comment|}}
+      <div> {{comment.comment_text}}</div>
+      <span> {{comment.user.username}}</span>
+    {{/each}}
+*/}
     </div>
   );
 };
+// };
 
 export default UpdatePost;
