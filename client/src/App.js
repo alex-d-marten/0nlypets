@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 // component import
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider
-} from "@apollo/client";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -29,7 +25,8 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 const uploadLink = createUploadLink({
-  uri: "http://localhost:3001/graphql"});
+  uri: "http://localhost:3001/graphql",
+});
 const client = new ApolloClient({
   link: authLink.concat(uploadLink),
   cache: new InMemoryCache(),
@@ -52,7 +49,7 @@ function App() {
               <Route exact path="/login" component={Login} />
               <Route exact path="/signup" component={Signup} />
               <Route exact path="/profile/:username?" component={Profile} />
-              <Route exact path="/post/:id" component={SinglePost} />
+              <Route exact path="/post/:username/:id" component={SinglePost} />
               <Route
                 exact
                 path="/:username?/createpost"

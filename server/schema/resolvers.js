@@ -36,8 +36,8 @@ const resolvers = {
       return Post.find(params).sort({ createdAt: -1 });
     },
 
-    post: async (parent, { _id }) => {
-      return Post.findOne({ _id });
+    post: async (parent, { _id, username }) => {
+      return Post.findOne({ _id, username });
     },
   },
 
@@ -51,7 +51,9 @@ const resolvers = {
       const stream = createReadStream();
 
       // not sure if we need this, guide says it is for demo purposes but will have to play with this to decide if we need it
-      const out = require("fs").createWriteStream(`./uploadedFiles/${filename}`);
+      const out = require("fs").createWriteStream(
+        `./uploadedFiles/${filename}`
+      );
       stream.pipe(out);
       await finished(out);
 
@@ -99,7 +101,6 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
-    
     updatePost: async (parent, args, context) => {
       if (context.user) {
         return await Post.findByIdAndUpdate(context.user._id, args, {
@@ -155,7 +156,6 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
-    
     removeComment: async (parent, { postId, commentId }, context) => {
       if (context.user) {
         const updatedPost = await Post.findOneAndUpdate(
