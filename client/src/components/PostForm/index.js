@@ -15,12 +15,6 @@ const PostForm = () => {
   });
   const [characterCount, setCharacterCount] = useState(0);
 
-  const [addPost, { error }] = useMutation(ADD_POST)
-
-// got add post to stop giving error by getting rid of this block
-// also redirected to home after adding post 
-// will need to clean this up at the end
-
   const [addPost, { error }] = useMutation(ADD_POST, {
     update(cache, { data: { addPost } }) {
       try {
