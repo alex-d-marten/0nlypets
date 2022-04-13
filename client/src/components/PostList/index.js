@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_POSTS } from "../../utils/queries";
+import { ADD_LIKE } from "../../utils/mutations";
 import CommentList from "../CommentList";
 
 const PostList = ({ title }) => {
@@ -16,6 +17,10 @@ const PostList = ({ title }) => {
   }
   if (!data?.posts.length) {
     return <h3>No Posts Yet</h3>;
+  }
+
+  const addLike = ()=>{
+      
   }
 
   return (
@@ -41,6 +46,7 @@ const PostList = ({ title }) => {
                   <div>
                     <CommentList comments={post.comments} />
                   </div>
+                  <button className="btn btn-primary btn-sm" onClick={addLike}>Like</button>
                   <Link
                     className="btn btn-primary btn-sm"
                     to={`/post/${post._id}`}

@@ -47,7 +47,7 @@ Bootstrap, MongoDB, Heroku, Mongoose, React.js, Node.js, and Express.js, GraphQL
 - Curtis Hong &mdash; [github.com/NonchalantGarage](https://github.com/NonchalantGarage) 
 - Naomi Lounsbury &mdash; [github.com/Naomilounsbury](https://github.com/Naomilounsbury)
 - Jovial Chan &mdash; [github.com/CloudyLondon](https://github.com/CloudyLondon)
-- David Reyes &mdash;[https://github.com/](https://github.com/) 
+- David Reyes &mdash;[https://github.com/deivrs60](https://github.com/deivrs60) 
 - Chance Crawford &mdash; [github.com/Chance-Crawford](https://github.com/Chance-Crawford)
 
 

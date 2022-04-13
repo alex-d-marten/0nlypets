@@ -89,9 +89,17 @@ export const REMOVE_COMMENT = gql`
       _id
       username
       comments {
-        _id
+        _id 
         username
       }
     }
   }
 `;
+
+export const ADD_LIKE = gql`
+mutation addLike($id: ID!) {
+  addLike(id:$id){
+    _id
+    username
+  }
+}`
