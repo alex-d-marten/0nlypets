@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { UPDATE_POST } from "../utils/mutations";
-import {
-  QUERY_POSTS,
-  QUERY_POST,
-  QUERY_ME,
-  QUERY_USER,
-} from "../utils/queries";
+import { QUERY_POSTS, QUERY_POST, QUERY_USER } from "../utils/queries";
 
 // import Auth from "../utils/auth";
 // import { useQuery } from "@apollo/client";

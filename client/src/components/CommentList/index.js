@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const CommentList = ({ comments }) => {
-  console.log(comments, "ARRRRRRRR");
   return (
     <div className="card mb-3">
       <div className="card-header">
