@@ -12,7 +12,6 @@ function Nav({ currentPage, setCurrentPage }) {
     <div>
       <ul className="flex-container nav-list">
         {Auth.loggedIn() ? (
-
           <>
             <Link to={`/`} className="text-dark" style={{ textDecoration: 'none' }}>
               <li
@@ -54,7 +53,6 @@ function Nav({ currentPage, setCurrentPage }) {
             Logout
           </li>
         </Link>
-      
           </>
         ) : (
           <>
