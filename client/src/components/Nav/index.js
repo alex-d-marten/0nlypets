@@ -55,6 +55,7 @@ function Nav({ currentPage, setCurrentPage }) {
             Sign Up
           </li>
         </Link>
+        {/* display log out button when logged in */}
         <Link to={`/logout`} className="text-dark" style={{ textDecoration: 'none' }}>
           <li
             onClick={() => setCurrentPage("Logout")}

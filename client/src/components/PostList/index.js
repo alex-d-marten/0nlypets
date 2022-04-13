@@ -42,7 +42,7 @@ const PostList = ({ title }) => {
                     <CommentList comments={post.comments} />
                   </div>
                   <Link
-                    className="btn btn-primary btn-sm"
+                    className="btn btn-primary btn-info"
                     to={`/post/${post._id}`}
                   >
                     Comment on this good boy.
