@@ -68,11 +68,11 @@ const typeDefs = gql`
     removePost(postId: ID!): User
     updatePost(
       postId: ID!
-      petName: String
+      petName: String!
       caption: String!
       image: String
     ): Post
-    singleUpload(file: Upload!): File!
+    singleUpload(file: Upload!): File
   }
 `;
 

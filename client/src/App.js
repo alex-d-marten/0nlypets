@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 // component import
 import {
@@ -15,8 +15,10 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import SinglePost from "./pages/SinglePost"
+import SinglePost from "./pages/SinglePost";
 import CreatePost from "./pages/CreatePost";
+import UpdatePost from "./pages/UpdatePost";
+
 //import logo from "./logo.svg";
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("id_token");
@@ -39,7 +41,7 @@ function App() {
   // keeps track of which link in the Nav has been clicked
   // and is currently active.
   const [currentPage, setCurrentPage] = useState("Home");
-  
+
   return (
     <ApolloProvider client={client}>
       <Router>
@@ -55,8 +57,12 @@ function App() {
               <Route exact path="/signup" component={Signup} />
               <Route exact path="/profile/:username?" component={Profile} />
               <Route exact path="/post/:id" component={SinglePost} />
-              <Route exact path="/:username?/createpost" component={CreatePost} />
-
+              <Route
+                exact
+                path="/:username?/createpost"
+                component={CreatePost}
+              />
+              <Route exact path="/post/:id/editmode" component={UpdatePost} />
               {/* <Route component={NoMatch} /> */}
             </Switch>
           </section>
