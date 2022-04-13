@@ -1,6 +1,7 @@
 // The pet feed of existing posts will be displayed here for everyone. Only logged in users can interact with the posts (comment, like)
 import React from "react";
 import PostList from "../components/PostList";
+import UploadImage from "../components/UploadImage";
 
 //import Auth from "../utils/auth";
 import { useQuery } from "@apollo/client";
@@ -25,6 +26,7 @@ const Home = () => {
             <PostList posts={posts} title="Cute pictures galore" />
           )}
         </div>
+        <div><UploadImage></UploadImage></div>
       </div>
     </main>
   );

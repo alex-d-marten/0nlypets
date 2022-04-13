@@ -47,7 +47,7 @@ const resolvers = {
       const stream = createReadStream();
 
       // not sure if we need this, guide says it is for demo purposes but will have to play with this to decide if we need it
-      const out = require("fs").createWriteStream("local-file-output.txt");
+      const out = require("fs").createWriteStream(`./uploadedFiles/${filename}`);
       stream.pipe(out);
       await finished(out);
 
