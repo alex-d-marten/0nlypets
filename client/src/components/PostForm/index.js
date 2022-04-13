@@ -4,6 +4,8 @@ import { useMutation } from "@apollo/client";
 import { ADD_POST } from "../../utils/mutations";
 //import { REMOVE_POST } from "../../utils/mutations";
 import { QUERY_POSTS, QUERY_ME } from "../../utils/queries";
+import UploadImage from "../UploadImage";
+
 
 const PostForm = () => {
   const [formState, setFormState] = useState({
@@ -53,20 +55,21 @@ const PostForm = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
-    try {
+console.log(formState)
+   // try {
       await addPost({
         variables: { ...formState },
       });
-
+      // set location to home on submit
+       window.location.href="/"
       setFormState({
         petName: "",
         image: "",
         caption: "",
       });
-    } catch (err) {
-      console.error(err);
-    }
+    // } catch (err) {
+    //   console.error(err);
+    // }
   };
 
   const handleChange = (event) => {
@@ -106,15 +109,7 @@ const PostForm = () => {
           />
         </div>
 
-        <div className="col-12">
-          <input
-            name="image"
-            placeholder="Upload a photo here"
-            value={formState.image}
-            className="form-input w-100"
-            onChange={handleChange}
-          />
-        </div>
+        <UploadImage></UploadImage>
         <div className="col-12">
           <textarea
             name="caption"
@@ -126,15 +121,15 @@ const PostForm = () => {
           ></textarea>
         </div>
         <div className="col-12 col-lg-3">
-          <button className="btn btn-primary btn-block py-3" type="submit">
+          <button  className="btn btn-primary btn-block py-3" type="submit">
             Post Pic
           </button>
         </div>
-        {error && (
+        {/* {error && (
           <div className="col-12 my-3 bg-danger text-white p-3">
             Something went wrong...
           </div>
-        )}
+        )} */}
       </form>
     </div>
   );
