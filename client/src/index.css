@@ -126,6 +126,7 @@ a{
 
   .main-section{
     padding: 1rem;
+    min-height: 120vh;
   }
 
   .header-a{
@@ -161,5 +162,11 @@ a{
 
   .login-form{
     width: 75%;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .main-section{
+    min-height: calc(100vh - 92.8px - 80px);
   }
 }
