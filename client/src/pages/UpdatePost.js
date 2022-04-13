@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { UPDATE_POST } from "../utils/mutations";
-import { QUERY_POSTS, QUERY_ME } from "../utils/queries";
+import {
+  QUERY_POSTS,
+  QUERY_POST,
+  QUERY_ME,
+  QUERY_USER,
+} from "../utils/queries";
 
-//import Auth from "../utils/auth";
-import { useQuery } from "@apollo/client";
-import { QUERY_POST } from "../utils/queries";
+// import Auth from "../utils/auth";
+// import { useQuery } from "@apollo/client";
+// import { QUERY_POST } from "../utils/queries";
 
 //I hate to say it but I have no idea where the props for this are coming from
 // const UpdatePost = (props) => {
@@ -20,6 +25,7 @@ import { QUERY_POST } from "../utils/queries";
 // if (loading) {
 //   return <div>Loading...</div>;
 // }
+
 const UpdatePost = () => {
   const [formState, setFormState] = useState({
     petName: "",
@@ -42,11 +48,11 @@ const UpdatePost = () => {
         console.error(e);
       }
 
-      const { me } = cache.readQuery({ query: QUERY_ME });
-      console.log(me);
+      const { user } = cache.readQuery({ query: QUERY_USER });
+      console.log(user);
       cache.writeQuery({
-        query: QUERY_ME,
-        data: { me: { ...me, posts: [...me.posts, updatePost] } },
+        query: QUERY_USER,
+        data: { user: { ...user, posts: [...user.posts, updatePost] } },
       });
     },
   });
