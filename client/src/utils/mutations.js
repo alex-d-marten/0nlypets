@@ -93,13 +93,13 @@ export const REMOVE_USER = gql`
 `;
 
 export const REMOVE_COMMENT = gql`
-  mutation removeComment($id: ID!) {
-    removeComment(id: $id) {
+  mutation removeComment($postId: ID!, $commentId: ID!) {
+    removeComment(postId: $postId, commentId: $commentId) {
       _id
       username
       comments {
         _id
-        username
+        commentText
       }
     }
   }

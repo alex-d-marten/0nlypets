@@ -110,7 +110,7 @@ const resolvers = {
       throw new AuthenticationError("Not logged in");
     },
 
-    removePost: async (parent, args, context) => {
+    removePost: async (parent, { postId }, context) => {
       if (context.user) {
         return Post.findOneAndDelete({ _id: postId });
       }
@@ -128,13 +128,13 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
-    removeComment: async (parent, { postId, commentId }) => {
-      return Post.findOneAndUpdate(
-        { _id: postId },
-        { $pull: { comments: { _id: commentId } } },
-        { new: true }
-      );
-    },
+    // removeComment: async (parent, { postId, commentId }) => {
+    //   return Post.findOneAndUpdate(
+    //     { _id: postId },
+    //     { $pull: { comments: { _id: commentId } } },
+    //     { new: true }
+    //   );
+    // },
 
     addComment: async (parent, { postId, commentText }, context) => {
       if (context.user) {
