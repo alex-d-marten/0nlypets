@@ -1,53 +1,34 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { UPDATE_POST } from "../utils/mutations";
-import { QUERY_POSTS, QUERY_ME } from "../utils/queries";
+import { QUERY_POST, QUERY_POSTS, QUERY_USER } from "../utils/queries";
+import { useParams } from "react-router-dom";
 
-//import Auth from "../utils/auth";
 import { useQuery } from "@apollo/client";
-import { QUERY_POST } from "../utils/queries";
-
-//I hate to say it but I have no idea where the props for this are coming from
-// const UpdatePost = (props) => {
-// const { id: postId } = useParams();
-
-// const { loading, data } = useQuery(QUERY_POST, {
-//   variables: { id: postId },
-// });
-
-// const post = data?.post || {};
-
-// if (loading) {
-//   return <div>Loading...</div>;
-// }
-const UpdatePost = () => {
+const UpdatePostForm = () => {
+  const { id: postId, username: userParam } = useParams();
+  console.log(postId, "id")
+  console.log(userParam)
   const [formState, setFormState] = useState({
     petName: "",
-    image: "",
+
     caption: "",
   });
   const [characterCount, setCharacterCount] = useState(0);
-
+  const { loading, data } = useQuery(postId ? QUERY_POST : "", {
+    variables: { _id: postId, username: userParam },
+  });
+  console.log(data, "post");
   const [updatePost, { error }] = useMutation(UPDATE_POST, {
     update(cache, { data: { updatePost } }) {
       try {
-        const { posts } = cache.readQuery({ query: QUERY_POSTS });
-        console.log(posts);
-
         cache.writeQuery({
-          query: QUERY_POSTS,
-          data: { posts: [updatePost, ...posts] },
+          query: QUERY_POST,
+          data: { posts: [updatePost, ...data] },
         });
       } catch (e) {
         console.error(e);
       }
-
-      const { me } = cache.readQuery({ query: QUERY_ME });
-      console.log(me);
-      cache.writeQuery({
-        query: QUERY_ME,
-        data: { me: { ...me, posts: [...me.posts, updatePost] } },
-      });
     },
   });
 
@@ -81,37 +62,32 @@ const UpdatePost = () => {
     }
   };
 
-  // class Form extends React.Component {
-  //   state = {
-  //     petName: "what?",
-  //     caption: "",
-  //     image: "",
-  //   };
-  // }
-
-  // const { petName, caption, image } = this.state;
-
   return (
     <div>
-      {/* 
-      so I need a form. 
-      - which will shows my original caption and petName
-      - and the image is not changable
-      */}
+      <h3>Updtae</h3>
+
+      <p
+        className={`m-0 ${
+          characterCount === 280 || error ? "text-danger" : ""
+        }`}
+      >
+        Character Count: {characterCount}/280
+        {error && <span className="ml-2">Something went wrong...</span>}
+      </p>
       <form
         className="flex-row justify-center justify-space-between-md align-center"
         onSubmit={handleFormSubmit}
       >
-        <div>{/* Jovial needs the pic shows here */}</div>
         <div className="col-12">
           <input
             name="petName"
-            placeholder=""
+            placeholder="What are the names of the pet pictured in the photo?"
             value={formState.petName}
             className="form-input w-100"
             onChange={handleChange}
           />
         </div>
+
         <div className="col-12">
           <textarea
             name="caption"
@@ -124,62 +100,12 @@ const UpdatePost = () => {
         </div>
         <div className="col-12 col-lg-3">
           <button className="btn btn-primary btn-block py-3" type="submit">
-            DONE
-          </button>
-          <button className="btn btn-primary btn-block py-3" type="submit">
-            REMOVE THIS POST
+            Post Pic
           </button>
         </div>
       </form>
-
-      {/* 
-      <form
-              className="flex-row justify-center justify-space-between-md align-center" onSubmit={handleFormSubmit}
-              >
-      <input
-            name="petName" 
-            id="petName" 
-            type="text"
-            value={post.petName}
-            placeholder={post.petName}
-            onChange={handleChange}
-          />
-        <input
-        name="caption" 
-        id="caption"
-        type="text"
-        value={post.caption}
-        placeholder={post.caption}
-        onChange={handleChange}
-      />
-      </form> */}
-      {/* <form class="edit-post-form">
-    <div>
-      <label name="post-title">{{post.post_title}}</label>
-      <input
-        name="post-title"
-        id="post-title"
-        type="text"
-        value="{{post.post_title}}"
-      />
-    </div>
-    <div>
-      <label name="post-text">{{post.post_text}}</label>
-      <input
-        name="post-text"
-        id="post-text"
-        type="text"
-        value="{{post.post_text}}"
-      />
-    </div>
-    {{#each post.comments as |comment|}}
-      <div> {{comment.comment_text}}</div>
-      <span> {{comment.user.username}}</span>
-    {{/each}}
-*/}
     </div>
   );
 };
-// };
 
-export default UpdatePost;
+export default UpdatePostForm;

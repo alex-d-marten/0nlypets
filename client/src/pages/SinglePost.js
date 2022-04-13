@@ -17,9 +17,7 @@ const SinglePost = () => {
   });
   console.log(data);
 
-
   const post = data?.post || {};
- 
 
   if (loading) {
     return <div>Loading...</div>;
@@ -38,19 +36,20 @@ const SinglePost = () => {
           <p>{post.image} </p>
           <p> {post.caption} </p>
           <p>{post.createdAt}</p>
+          <div>
+            <CommentForm comments={post.comments} />
+          </div>
+
+          <div>
+            <CommentList comments={post.comments} />
+          </div>
           {Auth.getProfile().data.username === userParam ? (
-            <Link to={`/post/${post._id}/editmode/`}>EDIT IT!!</Link>
+            <Link to={`/post/${post.username}/${post._id}/editmode/`}>
+              EDIT IT!!
+            </Link>
           ) : (
             <Link to={`/post/${post._id}/`}>View</Link>
           )}
-        </div>
-
-        <div>
-          <CommentForm comments={post.comments} />
-        </div>
-
-        <div>
-          <CommentList comments={post.comments} />
         </div>
       </div>
     </div>
