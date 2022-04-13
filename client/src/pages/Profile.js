@@ -7,7 +7,7 @@ import PostList from "../components/PostList";
 import { useQuery } from "@apollo/client";
 import { QUERY_USER, QUERY_ME } from "../utils/queries";
 // import { ADD_POST } from "../utils/mutations";
-// import Auth from "../utils/auth";
+import Auth from "../utils/auth";
 
 const Profile = () => {
   const { username: userParam } = useParams();
@@ -21,8 +21,8 @@ const Profile = () => {
   // redirect to personal profile page if username is yours
   // if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
   //   console.log(Auth.getProfile());
-  //   return <Redirect to="/profile" />;
-  // }
+  //   return <Redirect to="/profile/{userParam}" />;
+  // // }
 
   if (loading) {
     return <div>Loading...</div>;
@@ -50,7 +50,6 @@ const Profile = () => {
           <PostList title={`${userParam}'s pet posts...`} />
         </div>
       </div>
-    
     </div>
   );
 };
