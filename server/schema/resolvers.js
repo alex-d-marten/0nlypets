@@ -94,34 +94,45 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
-    removePost: async (parent, args, context) => {
-      if (context.user) {
-        const updatedUser = await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { posts: post._id } },
-          { new: true }
-        );
-        return updatedUser;
-      }
-      throw new AuthenticationError("You need to be logged in");
-    },
+    // removePost: async (parent, args, context) => {
+    //   if (context.user) {
+    //     const updatedUser = await User.findOneAndUpdate(
+    //       { _id: context.user._id },
+    //       { $pull: { posts: post._id } },
+    //       { new: true }
+    //     );
+    //     return updatedUser;
+    //   }
+    //   throw new AuthenticationError("You need to be logged in");
+    // },
+
 
     // In case removePost doesn't work, try this one
-    // removeThought: async (parent, { thoughtId }) => {
-    //     return Thought.findOneAndDelete({ _id: thoughtId });
-    //   },
-
-    removeComment: async (parent, { postId, commentId }, context) => {
-      if (context.user) {
-        const updatedPost = await Post.findOneAndUpdate(
-          { _id: postId },
-          { $pull: { comments: { _id: commentId } } },
-          { new: true }
-        );
-        return updatedPost;
-      }
-      throw new AuthenticationError("You need to be logged in");
+    removePost: async (parent, { postId }) => {
+      return Post.findOneAndDelete({ _id: postId });
+    }, 
+    
+    removeComment: async (parent, { postId, commentId }) => {
+      return Post.findOneAndUpdate(
+        { _id: postId },
+        { $pull: { comments: { _id: commentId } } },
+        { new: true }
+      );
     },
+
+
+
+    // removeComment: async (parent, { postId, commentId }, context) => {
+    //   if (context.user) {
+    //     const updatedPost = await Post.findOneAndUpdate(
+    //       { _id: postId },
+    //       { $pull: { comments: { _id: commentId } } },
+    //       { new: true }
+    //     );
+    //     return updatedPost;
+    //   }
+    //   throw new AuthenticationError("You need to be logged in");
+    // },
 
     updatePost: async (parent, args, context) => {
       if (context.user) {
