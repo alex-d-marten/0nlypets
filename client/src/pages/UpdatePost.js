@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { UPDATE_POST } from "../utils/mutations";
+import { UPDATE_POST, REMOVE_POST } from "../utils/mutations";
 import { QUERY_POST, QUERY_POSTS, QUERY_USER } from "../utils/queries";
 import { useParams } from "react-router-dom";
 
-import { useQuery } from "@apollo/client";
 const UpdatePostForm = () => {
   const { id: postId, username: userParam } = useParams();
   console.log(postId, "id");
-  console.log(userParam);
+  // console.log(userParam);
   const [formState, setFormState] = useState({
     petName: "",
-
     caption: "",
   });
   const [characterCount, setCharacterCount] = useState(0);
@@ -19,11 +17,15 @@ const UpdatePostForm = () => {
     variables: { _id: postId, username: userParam },
   });
   console.log(data, "post");
+
+  const post = data?.post || {};
+
   const [updatePost, { error }] = useMutation(UPDATE_POST, {
-    update(cache, { data: { updatePost } }) {
+    update(cache, { data: { post } }) {
       try {
+        console.log("im a console");
         cache.writeQuery({
-          query: QUERY_POST,
+          query: UPDATE_POST,
           data: { posts: [updatePost, ...data] },
         });
       } catch (e) {
@@ -31,6 +33,24 @@ const UpdatePostForm = () => {
       }
     },
   });
+
+  const [removePost, { error2 }] = useMutation(REMOVE_POST);
+  const handleDeletePost = async (postId) => {
+    // get token
+    // const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    // if (!token) {
+    //   return false;
+    // }
+
+    try {
+      const { data } = await removePost({
+        variables: { postId },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -43,7 +63,6 @@ const UpdatePostForm = () => {
     window.location.href = "/";
     setFormState({
       petName: "",
-      image: "",
       caption: "",
     });
     // } catch (err) {
@@ -53,7 +72,6 @@ const UpdatePostForm = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-
     if (name === "caption" && value.length <= 280) {
       setFormState({ ...formState, [name]: value });
       setCharacterCount(value.length);
@@ -81,7 +99,7 @@ const UpdatePostForm = () => {
         <div className="col-12">
           <input
             name="petName"
-            placeholder="What are the names of the pet pictured in the photo?"
+            placeholder={post.petName}
             value={formState.petName}
             className="form-input w-100"
             onChange={handleChange}
@@ -91,16 +109,23 @@ const UpdatePostForm = () => {
         <div className="col-12">
           <textarea
             name="caption"
-            placeholder="Caption this photo..."
+            placeholder={post.caption}
             value={formState.caption}
             className="form-input w-100"
             style={{ lineHeight: "1.5" }}
             onChange={handleChange}
           ></textarea>
         </div>
+
         <div className="col-12 col-lg-3">
           <button className="btn btn-primary btn-block py-3" type="submit">
-            Post Pic
+            UPDATE
+          </button>
+          <button
+            className="btn btn-primary btn-block py-3"
+            onClick={() => handleDeletePost(post._id)}
+          >
+            DELETE
           </button>
         </div>
       </form>
