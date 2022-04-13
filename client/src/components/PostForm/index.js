@@ -4,6 +4,8 @@ import { useMutation } from "@apollo/client";
 import { ADD_POST } from "../../utils/mutations";
 //import { REMOVE_POST } from "../../utils/mutations";
 import { QUERY_POSTS, QUERY_ME } from "../../utils/queries";
+import UploadImage from "../UploadImage";
+
 
 const PostForm = () => {
   const [formState, setFormState] = useState({
@@ -115,15 +117,7 @@ console.log(formState)
           />
         </div>
 
-        <div className="col-12">
-          <input
-            name="image"
-            placeholder="Upload a photo here"
-            value={formState.image}
-            className="form-input w-100"
-            onChange={handleChange}
-          />
-        </div>
+        <UploadImage></UploadImage>
         <div className="col-12">
           <textarea
             name="caption"

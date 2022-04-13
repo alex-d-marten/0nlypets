@@ -16,9 +16,7 @@ const ImageUploader = () => {
       };
     return (
         <div>
-            <form onSubmit={() => {console.log("Submitted")}} encType={'multipart/form-data'}>
-                <input name={'document'} type={'file'} onChange={handleFileChange}/>
-            </form>
+            <input name={'document'} type={'file'} onChange={handleFileChange}/>
         </div>
     )
 }

@@ -5,8 +5,7 @@ import "./App.css";
 import {
   ApolloClient,
   InMemoryCache,
-  ApolloProvider,
-  createHttpLink,
+  ApolloProvider
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import Header from "./components/Header";
