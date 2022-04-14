@@ -38,7 +38,6 @@ const startServer = async () => {
 startServer();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use("/static/images" ,express.static(path.join(__dirname, "./uploadedFiles")));
 
 // Serve up static assets
 if (process.env.NODE_ENV === 'production') {
