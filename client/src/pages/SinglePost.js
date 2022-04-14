@@ -7,6 +7,8 @@ import { QUERY_POST } from "../utils/queries";
 import CommentForm from "../components/CommentForm";
 import CommentList from "../components/CommentList";
 import { Link } from "react-router-dom";
+import { REMOVE_POST } from "../utils/mutations";
+import { useMutation } from "@apollo/client";
 //I hate to say it but I have no idea where the props for this are coming from
 const SinglePost = () => {
   const { id: postId, username: userParam } = useParams();
@@ -18,6 +20,19 @@ const SinglePost = () => {
   console.log(data);
 
   const post = data?.post || {};
+  const [removePost, { error }] = useMutation(REMOVE_POST);
+
+  const handleRemovePost = async (postId) => {
+    console.log(postId);
+
+    try {
+      removePost({
+        variables: { postId: postId },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -33,13 +48,22 @@ const SinglePost = () => {
           </span>
         </p>
         <div className="card-body">
-          <p>{post.image} </p>
+          <img src={`${post.image}`} class="card-img-top" alt="cute pic here" />
           <p> {post.caption} </p>
           <p>{post.createdAt}</p>
           {Auth.getProfile().data.username === userParam ? (
-            <Link to={`/post/${post.username}/${post._id}/editmode/`}>
-              EDIT IT!!
-            </Link>
+            <>
+              <Link to={`/post/${post.username}/${post._id}/editmode/`}>
+                <button className="btn btn-color">Edit Post</button>
+              </Link>
+
+              <button
+                className="btn btn-delete"
+                onSubmit={handleRemovePost(post._id)}
+              >
+                Delete Post
+              </button>
+            </>
           ) : (
             <Link to={`/`}>Home</Link>
           )}
