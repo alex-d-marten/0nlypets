@@ -13,22 +13,19 @@ import { useMutation } from "@apollo/client";
 const SinglePost = () => {
   const { id: postId, username: userParam } = useParams();
 
-  console.log(postId);
   const { loading, data } = useQuery(postId ? QUERY_POST : "", {
     variables: { _id: postId, username: userParam },
   });
-  console.log(data);
 
   const post = data?.post || {};
   const [removePost, { error }] = useMutation(REMOVE_POST);
 
-  const handleRemovePost = async (postId) => {
-    console.log(postId);
-
+  const handleRemovePost = async (event) => {
     try {
       removePost({
         variables: { postId: postId },
       });
+      window.location.href="/"
     } catch (err) {
       console.error(err);
     }
@@ -37,7 +34,6 @@ const SinglePost = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-  console.log(Auth.getProfile().data);
 
   return (
     <div>
@@ -58,8 +54,8 @@ const SinglePost = () => {
               </Link>
 
               <button
-                className="btn btn-delete"
-                onSubmit={handleRemovePost(post._id)}
+                className="btn btn-danger btn-delete"
+                onClick={handleRemovePost}
               >
                 Delete Post
               </button>

@@ -17,12 +17,6 @@ const CreatePost = () => {
   });
   const user = data?.me || data?.user || {};
 
-  // redirect to personal profile page if username is yours
-  // if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
-  //   console.log(Auth.getProfile());
-  //   return <Redirect to="/profile" />;
-  // }
-
   if (loading) {
     return <div>Loading...</div>;
   }

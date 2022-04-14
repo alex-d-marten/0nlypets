@@ -6,21 +6,15 @@ import { useParams } from "react-router-dom";
 
 const UpdatePostForm = () => {
   const { id: postId, username: userParam } = useParams();
-  console.log(postId, "id");
-  // console.log(userParam);
   const [formState, setFormState] = useState({
     petName: "",
     caption: "",
   });
-  // const { user } = useQuery(userParam ? QUERY_USER : "", {
-  //   variables: { username: userParam },
-  // });
 
   const [characterCount, setCharacterCount] = useState(0);
   const { loading, data } = useQuery(postId ? QUERY_POST : "", {
     variables: { _id: postId, username: userParam },
   });
-  console.log(data, "post");
 
   const post = data?.post || {};
   const petName = post.petname;
@@ -41,7 +35,6 @@ const UpdatePostForm = () => {
             query: QUERY_POSTS,
             variables: { username: userParam },
           });
-          console.log(posts);
 
           cache.writeQuery({
             query: QUERY_POSTS,
@@ -55,33 +48,25 @@ const UpdatePostForm = () => {
           query: QUERY_USER,
           variables: { username: userParam },
         });
-        console.log(user, "user");
 
         cache.writeQuery({
           query: QUERY_USER,
           data: { user: { ...user, posts: [...user.posts, updatePost] } },
         });
-        console.log(data);
       },
     }
   );
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(formState);
-    // try {
     await updatePost({
       variables: { ...formState },
     });
-    // set location to home on submit
     window.location.href = "/";
     setFormState({
       petName: "",
       caption: "",
     });
-    // } catch (err) {
-    //   console.error(err);
-    // }
   };
 
   const handleChange = (event) => {
@@ -99,7 +84,7 @@ const UpdatePostForm = () => {
 
   return (
     <div>
-      <h3>Updtae</h3>
+      <h3>Update</h3>
 
       <p
         className={`m-0 ${

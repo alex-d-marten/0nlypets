@@ -7,7 +7,6 @@ const CommentForm = () => {
   const { id: postId } = useParams();
   const [commentText, setCommentText] = useState("");
   const [characterCount, setCharacterCount] = useState(0);
-  console.log(postId);
   const [addComment, { error }] = useMutation(ADD_COMMENT);
   const handleChange = (event) => {
     if (event.target.value.length <= 280) {
@@ -26,7 +25,6 @@ const CommentForm = () => {
 
       // clear form value
       setCommentText("");
-      console.log(data.postId);
       setCharacterCount(0);
     } catch (e) {
       console.error(e);
@@ -54,7 +52,7 @@ const CommentForm = () => {
           onChange={handleChange}
         ></textarea>
 
-        <button className="btn col-12 col-md-3" type="submit">
+        <button className="btn btn-success col-12 col-md-3" type="submit">
           Add
         </button>
       </form>

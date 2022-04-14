@@ -66,7 +66,6 @@ const resolvers = {
         })
         .then((results) => {
           console.log("Success!", JSON.stringify(results, null, 2));
-          console.log(results.secure_url);
           let imageUrl = results.secure_url;
           fs.writeFile(
             `../client/src/imageLink/index.js`,
@@ -173,8 +172,6 @@ const resolvers = {
           },
           { new: true }
         );
-
-        console.log(postId);
 
         return updatedPost;
       }
