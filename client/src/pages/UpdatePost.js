@@ -1,45 +1,147 @@
-import React from "react";
+import React, { useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import { UPDATE_POST, REMOVE_POST } from "../utils/mutations";
+import { QUERY_POST, QUERY_POSTS, QUERY_USER } from "../utils/queries";
 import { useParams } from "react-router-dom";
 
-//import Auth from "../utils/auth";
-import { useQuery } from "@apollo/client";
-import { QUERY_POST } from "../utils/queries";
-
-//I hate to say it but I have no idea where the props for this are coming from
-const UpdatePost = (props) => {
-  const { id: postId } = useParams();
-
-  const { loading, data } = useQuery(QUERY_POST, {
-    variables: { id: postId },
+const UpdatePostForm = () => {
+  const { id: postId, username: userParam } = useParams();
+  console.log(postId, "id");
+  // console.log(userParam);
+  const [formState, setFormState] = useState({
+    petName: "",
+    caption: "",
   });
+  // const { user } = useQuery(userParam ? QUERY_USER : "", {
+  //   variables: { username: userParam },
+  // });
+
+  const [characterCount, setCharacterCount] = useState(0);
+  const { loading, data } = useQuery(postId ? QUERY_POST : "", {
+    variables: { _id: postId, username: userParam },
+  });
+  console.log(data, "post");
 
   const post = data?.post || {};
+  const petName = post.petname;
+  const caption = post.petname;
+  const [updatePost, { error }] = useMutation(
+    UPDATE_POST,
+    {
+      variables: {
+        postId: postId,
+        petName: petName,
+        caption: caption,
+      },
+    },
+    {
+      update(cache, { data: { updatePost } }) {
+        try {
+          const { posts } = cache.readQuery({
+            query: QUERY_POSTS,
+            variables: { username: userParam },
+          });
+          console.log(posts);
 
+          cache.writeQuery({
+            query: QUERY_POSTS,
+            variables: { username: userParam },
+            data: { posts: [updatePost, ...posts] },
+          });
+        } catch (e) {
+          console.error(e);
+        }
+        const { user } = cache.readQuery({
+          query: QUERY_USER,
+          variables: { username: userParam },
+        });
+        console.log(user, "user");
+
+        cache.writeQuery({
+          query: QUERY_USER,
+          data: { user: { ...user, posts: [...user.posts, updatePost] } },
+        });
+        console.log(data);
+      },
+    }
+  );
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    console.log(formState);
+    // try {
+    await updatePost({
+      variables: { ...formState },
+    });
+    // set location to home on submit
+    window.location.href = "/";
+    setFormState({
+      petName: "",
+      caption: "",
+    });
+    // } catch (err) {
+    //   console.error(err);
+    // }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    if (name === "caption" && value.length <= 280) {
+      setFormState({ ...formState, [name]: value });
+      setCharacterCount(value.length);
+    } else if (name !== "caption") {
+      setFormState({ ...formState, [name]: value });
+    }
+  };
   if (loading) {
     return <div>Loading...</div>;
   }
 
   return (
     <div>
-      {/* <div className="card mb-3">
-        <p className="card-header">
-          <span style={{ fontWeight: 700 }} className="text-light">
-            {post.petName}
-          </span>
-        </p>
-        <div className="card-body">
-          <p>{post.image} </p>
-          <p> {post.caption} </p>
-          <p>{post.createdAt}</p>
+      <h3>Updtae</h3>
+
+      <p
+        className={`m-0 ${
+          characterCount === 280 || error ? "text-danger" : ""
+        }`}
+      >
+        Character Count: {characterCount}/280
+        {error && <span className="ml-2">Something went wrong...</span>}
+      </p>
+      <form
+        className="flex-row justify-center justify-space-between-md align-center"
+        onSubmit={handleFormSubmit}
+      >
+        <div className="col-12">
+          <input
+            name="petName"
+            placeholder={post.petName}
+            value={formState.petName}
+            className="form-input w-100"
+            onChange={handleChange}
+          />
         </div>
 
-        <div><CommentForm comments = {post.comments} /></div>
-        
-        <div><CommentList postId={post._id} /></div>
+        <div className="col-12">
+          <textarea
+            name="caption"
+            placeholder={post.caption}
+            value={formState.caption}
+            className="form-input w-100"
+            style={{ lineHeight: "1.5" }}
+            onChange={handleChange}
+          ></textarea>
+        </div>
 
-      </div> */}
+        <div className="col-12 col-lg-3">
+          <button className="btn btn-primary btn-block py-3" type="submit">
+            Update
+          </button>
+        </div>
+      </form>
     </div>
   );
 };
 
-export default UpdatePost;
+export default UpdatePostForm;

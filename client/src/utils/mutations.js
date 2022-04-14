@@ -49,7 +49,7 @@ export const UPLOAD_FILE = gql`
       encoding
     }
   }
-`
+`;
 
 export const ADD_COMMENT = gql`
   mutation addComment($postId: ID!, $commentText: String!) {
@@ -75,8 +75,18 @@ export const REMOVE_POST = gql`
 `;
 
 export const UPDATE_POST = gql`
-  mutation updatePost($id: ID!) {
-    updatePost(id: $ID) {
+  mutation updatePost(
+    $postId: ID!
+    $petName: String!
+    $caption: String!
+    $image: String
+  ) {
+    updatePost(
+      postId: $postId
+      petName: $petName
+      caption: $caption
+      image: $image
+    ) {
       _id
       username
     }
