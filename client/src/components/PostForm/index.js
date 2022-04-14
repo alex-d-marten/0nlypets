@@ -13,7 +13,7 @@ const PostForm = () => {
     caption: "",
   });
   const [characterCount, setCharacterCount] = useState(0);
-
+  
   const [uploadImage] = useMutation(UPLOAD_FILE, {
     onCompleted: (data) => console.log(data),
 });
