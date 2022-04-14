@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Auth from "../../utils/auth";
 
+
 function Nav({ currentPage, setCurrentPage }) {
 
   const logout = event => {

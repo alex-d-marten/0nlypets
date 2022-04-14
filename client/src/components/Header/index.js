@@ -1,6 +1,8 @@
 import Nav from "../Nav";
 import { Link } from "react-router-dom";
 import Auth from "../../utils/auth";
+import React, { useState } from 'react';
+import Signup from "../../pages/Signup";
 
 
 function Header({ currentPage, setCurrentPage }){
@@ -8,8 +10,8 @@ function Header({ currentPage, setCurrentPage }){
         <header className="top-header">
             <div className="flex-container">
             <Link
-                to={`/${Auth.loggedIn() ? Auth.login: ""
-                }/signup/`} 
+                to={`/home${Auth.loggedIn() ? Auth.Signup():""
+                }/Signup/`} 
                 className="custom-a">
                     <h1 className="head-1">OnlyPets</h1>
             </Link>
