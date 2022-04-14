@@ -39,17 +39,6 @@ then upon click you can view caption/created at/add comment/and edit if logged i
                     class="card-img-top"
                     alt="cute pic here"
                   />
-                  <p className="">{post.caption}</p>
-                  <div className="card-body">{post.createdAt}</div>
-                  <div>
-                    <CommentList comments={post.comments} />
-                  </div>
-                  <Link
-                    className="btn btn-color"
-                    to={`/post/${post.username}/${post._id}`}
-                  >
-                    Comment on this good boy.
-                  </Link>
                 </div>
               </div>
             </div>
