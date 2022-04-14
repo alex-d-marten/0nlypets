@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-
 import { useMutation } from "@apollo/client";
 import { ADD_POST, UPLOAD_FILE } from "../../utils/mutations";
 //import { REMOVE_POST } from "../../utils/mutations";
 import { QUERY_POSTS, QUERY_ME } from "../../utils/queries";
-import UploadImage from "../UploadImage";
-
 
 const PostForm = () => {
   const [formState, setFormState] = useState({
@@ -15,39 +12,16 @@ const PostForm = () => {
   });
   const [characterCount, setCharacterCount] = useState(0);
 
-  const [uploadImage] = useMutation(UPLOAD_FILE, {
-    onCompleted: (data) => console.log(data),
-});
-const handleFileChange = (e) => {
+  const [uploadImage] = useMutation(UPLOAD_FILE);
+
+  const handleFileChange = (e) => {
     const file = e.target.files[0];
-    console.log(file)
     if (!file) return;
     formState.image = file.name;
     uploadImage({ variables: { file } });
   };
 
-  const [addPost, { error }] = useMutation(ADD_POST, {
-    update(cache, { data: { addPost } }) {
-      try {
-        const { posts } = cache.readQuery({ query: QUERY_POSTS });
-        console.log(posts)
-
-        cache.writeQuery({
-          query: QUERY_POSTS,
-          data: { posts: [addPost, ...posts] },
-        });
-      } catch (e) {
-        console.error(e);
-      }
-
-      const { me } = cache.readQuery({ query: QUERY_ME });
-      console.log(me)
-      cache.writeQuery({
-          query: QUERY_ME,
-          data: { me: { ...me, posts: [...me.posts, addPost] } },
-      });
-    },
-  });
+  const [addPost, { error }] = useMutation(ADD_POST)
   //   I don't think this is the correct way to do a remove post because it doesnt take the id, I think we should make a remove post function to
   //   const [removePost, { error }] = useMutation(REMOVE_POST, {
   //     update(cache, { data: { removePost } }) {
@@ -66,7 +40,7 @@ const handleFileChange = (e) => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-console.log(formState)
+    console.log(formState)
    // try {
     //  formState.image
       await addPost({

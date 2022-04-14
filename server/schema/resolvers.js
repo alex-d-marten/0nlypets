@@ -3,6 +3,9 @@ const { User, Post } = require("../models");
 const { signToken } = require("../utils/auth");
 const { GraphQLUpload } = require("graphql-upload");
 const { finished } = require("stream/promises");
+require("dotenv").config();
+const cloudinary = require("cloudinary").v2;
+let imageName;
 
 const resolvers = {
   Query: {
@@ -46,17 +49,17 @@ const resolvers = {
   Mutation: {
     singleUpload: async (parent, { file }) => {
       const { createReadStream, filename, mimetype, encoding } = await file;
-
       // invoke the `createReadStream` as this will return a Readable stream.
       const stream = createReadStream();
 
-      // not sure if we need this, guide says it is for demo purposes but will have to play with this to decide if we need it
       const out = require("fs").createWriteStream(
         `./uploadedFiles/${filename}`
-      );
-      stream.pipe(out);
+        );
+        stream.pipe(out);
+        
       await finished(out);
-
+      
+      imageName = filename;
       return { filename, mimetype, encoding };
     },
 
@@ -86,10 +89,25 @@ const resolvers = {
 
     addPost: async (parent, args, context) => {
       if (context.user) {
+        cloudinary.uploader
+        .upload(`./uploadedFiles/${imageName}`, {
+            resource_type: "image",
+        })
+        .then((results) => {
+            console.log("Success!", JSON.stringify(results, null, 2));
+            console.log(results.secure_url)
+            imageUrl = results.secure_url;
+        })
+        .catch((error) => {
+            console.log("Error!", JSON.stringify(error, null, 2));
+        })
+
+
         const post = await Post.create({
           ...args,
           username: context.user.username,
         });
+        console.log(args)
         await User.findByIdAndUpdate(
           { _id: context.user._id },
           { $push: { posts: post._id } },
