@@ -49,16 +49,20 @@ const SinglePost = () => {
           <p>{post.createdAt}</p>
           {Auth.getProfile().data.username === userParam ? (
             <>
+            <div class='text-left'>
               <Link to={`/post/${post.username}/${post._id}/editmode/`}>
-                <button className="btn btn-color">Edit Post</button>
+                <button className="btn btn-color text-left p-3 m-1">Edit Post</button>
               </Link>
+              </div>
 
               <button
-                className="btn btn-danger btn-delete"
+                className="btn btn-danger btn-delete text-left p-2 m-1"
                 onClick={handleRemovePost}
               >
                 Delete Post
               </button>
+              
+              
             </>
           ) : (
             <Link to={`/`}>Home</Link>

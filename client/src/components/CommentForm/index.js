@@ -20,7 +20,7 @@ const CommentForm = () => {
 
     try {
       const { data } = await addComment({
-        variables: { postId,commentText },
+        variables: { postId, commentText },
       });
 
       // clear form value
@@ -44,17 +44,18 @@ const CommentForm = () => {
       <form
         className="flex-row justify-center justify-space-between-md align-stretch"
         onSubmit={handleFormSubmit}
-      >
-        <textarea
-          placeholder="Add comment..."
-          value={commentText}
-          className="form-input col-12 col-md-9"
-          onChange={handleChange}
-        ></textarea>
+      >     
+          <textarea
+            placeholder="Add comment..."
+            value={commentText}
+            className="form-input col-12 col-md-9"
+            onChange={handleChange}
+          ></textarea>
+              <button className="btn btn-color" type="submit">
+                Add
+              </button>
+      
 
-        <button className="btn btn-success col-12 col-md-3" type="submit">
-          Add
-        </button>
       </form>
 
       {error && <div>Something went wrong...</div>}

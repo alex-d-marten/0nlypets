@@ -21,7 +21,7 @@ a{
   color: #000;
   transition: color .35s;
 }
-a:hover, .btn-color:hover {
+a:hover, .btn-color:hover, .btn-delete:hover{
   color: #fff;
 }
 .top-header,
@@ -30,6 +30,7 @@ a:hover, .btn-color:hover {
   background-color: rgb(214,185,149);
   padding: 1rem 2rem;
 }
+
 
 .flex-container {
   display: flex;

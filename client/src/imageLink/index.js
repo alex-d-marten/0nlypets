@@ -1,2 +1,2 @@
-const linkText = "https://res.cloudinary.com/onlypets-images/image/upload/v1649975363/e3sekcrhfypz9gzslcjt.jpg";
+const linkText = "https://res.cloudinary.com/dujv5nofh/image/upload/v1649976510/jv5kchjq7d8dggf2dydq.jpg";
 module.exports = { linkText };
