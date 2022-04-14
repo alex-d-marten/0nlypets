@@ -33,7 +33,7 @@ const PostList = ({ title }) => {
 
                   <p className="card-header">{post.petName}</p>
                   <Link
-                    className="btn btn-color"
+                    className="btn"
                     to={`/post/${post.username}/${post._id}`}
                   >
                     <img
