@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const QUERY_POST = gql`
-  query post($_id: ID!) {
-    post(_id: $_id) {
+  query post($_id: ID!, $username: String) {
+    post(_id: $_id, username: $username) {
       _id
       petName
       caption

@@ -30,8 +30,7 @@ const PostList = ({ title }) => {
                   <Link to={`/profile/${post.username}`} className="text-dark">
                     {post.username}
                   </Link>
-                  {/* Jovial wants to add EDIT button here!!!!!! */}
-                  <Link to={`/post/${post._id}/editmode/`}>EDIT IT!!</Link>
+
                   <p className="card-header">{post.petName}</p>
                   <img
                     src={`/static/images/${post.image}`}
@@ -44,8 +43,8 @@ const PostList = ({ title }) => {
                     <CommentList comments={post.comments} />
                   </div>
                   <Link
-                    className="btn btn-primary btn-info"
-                    to={`/post/${post._id}`}
+                    className="btn btn-color"
+                    to={`/post/${post.username}/${post._id}`}
                   >
                     Comment on this good boy.
                   </Link>

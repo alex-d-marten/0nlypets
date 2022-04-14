@@ -20,11 +20,12 @@ code {
 a{
   color: #000;
 }
-a:hover {
+a:hover, .btn-color:hover {
   color: #fff;
 }
 .top-header,
-.footer-div {
+.footer-div,
+.btn-color {
   background-color: rgb(214,185,149);
   padding: 1rem 2rem;
 }
@@ -88,7 +89,7 @@ a:hover {
   margin: 0;
 }
 
-a{
+a {
   text-decoration: none !important;
 }
 
