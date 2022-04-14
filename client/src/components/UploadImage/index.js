@@ -15,7 +15,7 @@ const ImageUploader = () => {
         uploadImage({ variables: { file } });
       };
     return (
-        <div>
+        <div className='mt-3'>
             <input name={'document'} type={'file'} onChange={handleFileChange}/>
         </div>
     )
