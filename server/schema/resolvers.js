@@ -55,31 +55,33 @@ const resolvers = {
       const stream = createReadStream();
 
       // not sure if we need this, guide says it is for demo purposes but will have to play with this to decide if we need it
-      const out = fs.createWriteStream(
-        `./uploadedFiles/${filename}`
-      );
+      const out = fs.createWriteStream(`./uploadedFiles/${filename}`);
       stream.pipe(out);
       await finished(out);
       imageName = filename;
 
       cloudinary.uploader
         .upload(`./uploadedFiles/${imageName}`, {
-            resource_type: "image",
+          resource_type: "image",
         })
         .then((results) => {
-            console.log("Success!", JSON.stringify(results, null, 2));
-            console.log(results.secure_url)
-            let imageUrl = results.secure_url;
-            fs.writeFile(`../client/src/imageLink/index.js`, `const linkText = "${imageUrl}";\nmodule.exports = { linkText };`, err => {
+          console.log("Success!", JSON.stringify(results, null, 2));
+          console.log(results.secure_url);
+          let imageUrl = results.secure_url;
+          fs.writeFile(
+            `../client/src/imageLink/index.js`,
+            `const linkText = "${imageUrl}";\nmodule.exports = { linkText };`,
+            (err) => {
               if (err) {
-                console.error(err)
-                return
+                console.error(err);
+                return;
               }
-            })
+            }
+          );
         })
         .catch((error) => {
-            console.log("Error!", JSON.stringify(error, null, 2));
-        })
+          console.log("Error!", JSON.stringify(error, null, 2));
+        });
 
       return { filename, mimetype, encoding };
     },
@@ -134,7 +136,7 @@ const resolvers = {
       throw new AuthenticationError("Not logged in");
     },
 
-    removePost: async (parent, args, context) => {
+    removePost: async (parent, { postId }, context) => {
       if (context.user) {
         return Post.findOneAndDelete({ _id: postId });
       }
