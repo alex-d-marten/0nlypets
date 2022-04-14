@@ -10,7 +10,6 @@ const ImageUploader = () => {
     });
     const handleFileChange = (e) => {
         const file = e.target.files[0];
-        console.log(file)
         if (!file) return;
         uploadImage({ variables: { file } });
       };

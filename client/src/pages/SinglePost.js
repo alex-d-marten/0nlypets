@@ -13,17 +13,14 @@ import { useMutation } from "@apollo/client";
 const SinglePost = () => {
   const { id: postId, username: userParam } = useParams();
 
-  console.log(postId);
   const { loading, data } = useQuery(postId ? QUERY_POST : "", {
     variables: { _id: postId, username: userParam },
   });
 
   const post = data?.post || {};
-  console.log(post)
   const [removePost, { error }] = useMutation(REMOVE_POST);
 
   const handleRemovePost = async (event) => {
-    console.log(postId);
     try {
       removePost({
         variables: { postId: postId },
@@ -37,7 +34,6 @@ const SinglePost = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-  console.log(Auth.getProfile().data);
 
   return (
     <div>
