@@ -61,7 +61,7 @@ const Login = (props) => {
                   onChange={handleChange}
                 />
                 <div className='w-100 text-center mt-4'>
-                  <button className="btn submit-btn" type="submit">
+                  <button className="btn btn-color submit-btn" type="submit">
                     Submit
                   </button>
                 </div>

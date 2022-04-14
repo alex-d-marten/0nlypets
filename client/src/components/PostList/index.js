@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_POSTS } from "../../utils/queries";
-import CommentList from "../CommentList";
+
 
 const PostList = ({ title }) => {
   const { username: userParam } = useParams();
@@ -41,19 +41,6 @@ then upon click you can view caption/created at/add comment/and edit if logged i
                       alt="cute pic here"
                     />
                   </Link>
-
-                  {/* <p className="">{post.caption}</p>
-                  <div className="card-body">{post.createdAt}</div>
-
-                  <div>
-                    <CommentList comments={post.comments} />
-                  </div> */}
-                  {/* <Link
-                    className="btn btn-color"
-                    to={`/post/${post.username}/${post._id}`}
-                  >
-                    Comment on this good boy.
-                  </Link> */}
                 </div>
               </div>
             </div>

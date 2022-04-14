@@ -2,10 +2,8 @@ import React from "react";
 import { useParams } from "react-router-dom";
 
 
-import { useMutation } from "@apollo/client";
 import { useQuery } from "@apollo/client";
 import { QUERY_POST } from "../utils/queries";
-import { REMOVE_POST } from '../utils/mutations';
 import CommentForm from "../components/CommentForm";
 import CommentList from "../components/CommentList";
 
@@ -19,20 +17,6 @@ const UpdatePost = (props) => {
   });
 
   const post = data?.post || {};
-
-
-  const [removePost, { error }] = useMutation(REMOVE_POST);
-
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    console.log(postId)
-    await removePost({
-      variables: { postId },
-    });
-    window.location.href = '/profile'
-  };
-
-
 
   if (loading) {
     return <div>Loading...</div>;
@@ -52,13 +36,6 @@ const UpdatePost = (props) => {
           <p> {post.caption} </p>
           <p>{post.createdAt}</p>
         </div>
-
-        <div>
-          <button className="btn btn-color" ontype="submit" onSubmit={handleFormSubmit}>
-            <i class="fa-solid fa-trash"></i>
-          </button>
-        </div>
-
         <div><CommentForm comments={post.comments} /></div>
 
         <div><CommentList postId={post._id} /></div>

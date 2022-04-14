@@ -65,6 +65,15 @@ export const ADD_COMMENT = gql`
   }
 `;
 
+export const REMOVE_USER = gql`
+  mutation removeUser($id: ID!) {
+    removeUser(id: $id) {
+      _id
+      username
+    }
+  }
+`;
+
 export const REMOVE_POST = gql`
 mutation removePost($postId: ID!) {
   removePost(postId: $postId) {
@@ -83,14 +92,7 @@ export const UPDATE_POST = gql`
   }
 `;
 
-export const REMOVE_USER = gql`
-  mutation removeUser($id: ID!) {
-    removeUser(id: $id) {
-      _id
-      username
-    }
-  }
-`;
+
 
 export const REMOVE_COMMENT = gql`
   mutation removeComment($postId: ID!, $commentId: ID!) {
