@@ -18,6 +18,7 @@ import SinglePost from "./pages/SinglePost";
 import CreatePost from "./pages/CreatePost";
 import UpdatePost from "./pages/UpdatePost";
 import { createUploadLink } from "apollo-upload-client";
+import ProtectedRoute from "./components/ProtectedRoute";
 //import logo from "./logo.svg";
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("id_token");
@@ -48,9 +49,9 @@ function App() {
           ></Header>
           <section className="main-section">
             <Switch>
-              <Route exact path="/" component={Home} />
+//////            <Route exact path="auth/" compontent={Home}/>
+//////          <Route exact path="/signup" component={Signup} />
               <Route exact path="/login" component={Login} />
-              <Route exact path="/signup" component={Signup} />
               <Route exact path="/profile/:username?" component={Profile} />
               <Route exact path="/post/:id" component={SinglePost} />
               <Route
@@ -60,6 +61,7 @@ function App() {
               />
               <Route exact path="/post/:id/editmode" component={UpdatePost} />
               {/* <Route component={NoMatch} /> */}
+//////               <Route path="*" component={Home} />
             </Switch>
           </section>
           <Footer></Footer>

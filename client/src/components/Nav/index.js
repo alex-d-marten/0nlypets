@@ -48,9 +48,10 @@ function Nav({ currentPage, setCurrentPage }) {
               </li>
             </Link>
             
-        <Link to={`/`} className="text-dark" style={{ textDecoration: 'none' }}>
+        <Link to={`/Signup`} className="text-dark" style={{ textDecoration: 'none' }}>
           <li
             onClick={logout}
+            
           >
             Logout
           </li>
@@ -58,6 +59,7 @@ function Nav({ currentPage, setCurrentPage }) {
       
           </>
         ) : (
+            
           <>
             {/* <li onClick={()=>setCurrentPage('Add Post')} className={currentPage === 'Add Post' && 'nav-active'}>Add Post</li> */}
             <Link to={`/login`} className="text-dark" style={{ textDecoration: 'none' }}>
