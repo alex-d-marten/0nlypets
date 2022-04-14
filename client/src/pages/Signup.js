@@ -32,11 +32,11 @@ const Signup = () => {
   };
   return (
     <main className="row w-100 login-main mb-4">
-      <div className='d-flex w-100 align-items-center justify-content-center'>
-        <div className='col-12 col-md-5'>
+      <div className='d-flex w-100 align-items-center flex-wrap justify-content-center'>
+        <div className='col-12 col-md-5 login-img'>
             <img src={petSignup} alt="pet holding signup poster" className='w-100' />
         </div>
-        <div className="col-12 col-md-5 left-margin">
+        <div className="col-12 col-md-5 left-margin login-form">
           <div className="card">
             <h2 className="card-header text-center">Sign Up</h2>
             <div className="card-body">
