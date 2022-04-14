@@ -31,10 +31,11 @@ const SinglePost = () => {
       <div className="card mb-3">
         <p className="card-header">
           <span style={{ fontWeight: 700 }} className="text-dark">
-            {post.petName}
+            {post.username}
           </span>
         </p>
         <div className="card-body">
+          <p>{post.petName}</p>
           <p>{post.image} </p>
           <p> {post.caption} </p>
           <p>{post.createdAt}</p>

@@ -27,27 +27,33 @@ const PostList = ({ title }) => {
             <div className="col">
               <div className="card-group">
                 <div key={post._id} className="card border-primary mb-3 p-3">
+                  {/* idea: ig format where username/photo appear on home 
+then upon click you can view caption/created at/add comment/and edit if logged in */}
                   <Link to={`/profile/${post.username}`} className="text-dark">
                     {post.username}
                   </Link>
 
                   <p className="card-header">{post.petName}</p>
-                  <img
-                    src={post.image}
-                    class="card-img-top"
-                    alt="cute pic here"
-                  />
-                  <p className="">{post.caption}</p>
+                  <Link to={`/post/${post.username}/${post._id}`}>
+                    <img
+                      src={post.image}
+                      class="card-img-top"
+                      alt="cute pic here"
+                    />
+                  </Link>
+
+                  {/* <p className="">{post.caption}</p>
                   <div className="card-body">{post.createdAt}</div>
+
                   <div>
                     <CommentList comments={post.comments} />
-                  </div>
-                  <Link
+                  </div> */}
+                  {/* <Link
                     className="btn btn-color"
                     to={`/post/${post.username}/${post._id}`}
                   >
                     Comment on this good boy.
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             </div>

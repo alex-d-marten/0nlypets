@@ -1,10 +1,14 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 
-//import Auth from "../utils/auth";
+
+import { useMutation } from "@apollo/client";
 import { useQuery } from "@apollo/client";
 import { QUERY_POST } from "../utils/queries";
 import { REMOVE_POST } from '../utils/mutations';
+import CommentForm from "../components/CommentForm";
+import CommentList from "../components/CommentList";
+
 
 //I hate to say it but I have no idea where the props for this are coming from
 const UpdatePost = (props) => {
@@ -37,7 +41,7 @@ const UpdatePost = (props) => {
 
   return (
     <div>
-      {/* <div className="card mb-3">
+      <div className="card mb-3">
         <p className="card-header">
           <span style={{ fontWeight: 700 }} className="text-light">
             {post.petName}
@@ -50,18 +54,16 @@ const UpdatePost = (props) => {
         </div>
 
         <div>
-         {Auth.loggedIn() ? ( 
-            <button className="btn btn-color" ontype="submit" onSubmit={handleFormSubmit}>
+          <button className="btn btn-color" ontype="submit" onSubmit={handleFormSubmit}>
             <i class="fa-solid fa-trash"></i>
-        </button>
-          )}
-          </div>
-    
-        <div><CommentForm comments = {post.comments} /></div>
-        
+          </button>
+        </div>
+
+        <div><CommentForm comments={post.comments} /></div>
+
         <div><CommentList postId={post._id} /></div>
 
-      </div> */}
+      </div>
     </div>
   );
 };
