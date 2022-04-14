@@ -19,6 +19,7 @@ code {
 /* component styles */
 a{
   color: #000;
+  transition: color .35s;
 }
 a:hover, .btn-color:hover, .btn-delete:hover{
   color: #fff;
@@ -78,7 +79,7 @@ a:hover, .btn-color:hover, .btn-delete:hover{
 } */
 
 .main-section {
-  min-height: calc(100vh - 92.8px - 89.59px);
+  min-height: calc(100vh - 92.8px - 80px);
   padding: 2rem;
   position: relative;
 }
@@ -116,4 +117,61 @@ a {
 
 .left-margin{
   margin-left: 2rem;
+}
+
+
+/* media queries */
+
+@media only screen and (max-width: 1000px)  {
+
+  .flex-container{
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .main-section{
+    padding: 1rem;
+    min-height: 120vh;
+  }
+
+  .header-a{
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-list{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .nav-list a{
+    width: 100%;
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  .nav-list li{
+    font-size: 1.5rem;
+    margin: 0;
+    width: 100%;
+  }
+
+  .left-margin{
+    margin: 0;
+  }
+
+  .login-img{
+    width: 75%;
+  }
+
+  .login-form{
+    width: 75%;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .main-section{
+    min-height: calc(100vh - 92.8px - 80px);
+  }
 }

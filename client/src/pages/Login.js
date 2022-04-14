@@ -33,11 +33,11 @@ const Login = (props) => {
   };
   return (
     <main className="row w-100 login-main mb-4">
-      <div className='d-flex w-100 align-items-center justify-content-center'>
-        <div className='col-12 col-md-5'>
+      <div className='d-flex w-100 align-items-center flex-wrap justify-content-center'>
+        <div className='col-12 col-md-5 login-img'>
           <img src={dogLogin} alt="dog login" className='w-100' />
         </div>
-        <div className="col-12 col-md-5 left-margin">
+        <div className="col-12 col-md-5 left-margin login-form">
           <div className="card">
             <h2 className="card-header text-center">Login</h2>
             <div className="card-body">

@@ -9,6 +9,7 @@ import CommentList from "../components/CommentList";
 import { Link } from "react-router-dom";
 import { REMOVE_POST } from "../utils/mutations";
 import { useMutation } from '@apollo/client';
+
 //I hate to say it but I have no idea where the props for this are coming from
 const SinglePost = () => {
   const { id: postId, username: userParam } = useParams();
@@ -20,7 +21,7 @@ const SinglePost = () => {
   console.log(data);
 
   const post = data?.post || {};
-
+// help
   const [removePost, { error }] = useMutation(REMOVE_POST);
 
   const handleRemovePost = async (event) => {
@@ -73,26 +74,6 @@ const SinglePost = () => {
             </Link>
           )}
         </div>
-
-        {/* <div>
-          {Auth.loggedIn() ? (
-            <>
-              <button className="btn btn-delete"
-                onSubmit={handleRemovePost}
-              >
-                Delete Post
-              </button>
-            </>
-          ) : (
-            <>
-            <Link to={`/post${post.username}/${post._id}`}>
-              <button className='btn btn-color'>Back</button>
-            </Link>
-            </>
-          )}
-
-        </div> */}
-
         <div>
           <CommentForm comments={post.comments} />
         </div>
