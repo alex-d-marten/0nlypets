@@ -55,7 +55,7 @@ function App() {
                 path="/:username?/createpost"
                 component={CreatePost}
               />
-              <Route exact path="/post/:id/editmode" component={UpdatePost} />
+              <Route exact path="/post/:username/:id/editmode" component={UpdatePost} />
               {/* <Route component={NoMatch} /> */}
             </Switch>
           </section>
