@@ -38,6 +38,7 @@ const startServer = async () => {
 startServer();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use("/static/images" ,express.static(path.join(__dirname, "./uploadedFiles")));
 
 db.once("open", () => {
   app.listen(PORT, () => {

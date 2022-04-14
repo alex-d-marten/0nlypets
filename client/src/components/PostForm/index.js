@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { useMutation } from "@apollo/client";
-import { ADD_POST } from "../../utils/mutations";
+import { ADD_POST, UPLOAD_FILE } from "../../utils/mutations";
 //import { REMOVE_POST } from "../../utils/mutations";
 import { QUERY_POSTS, QUERY_ME } from "../../utils/queries";
 import UploadImage from "../UploadImage";
@@ -14,6 +14,17 @@ const PostForm = () => {
     caption: "",
   });
   const [characterCount, setCharacterCount] = useState(0);
+
+  const [uploadImage] = useMutation(UPLOAD_FILE, {
+    onCompleted: (data) => console.log(data),
+});
+const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    console.log(file)
+    if (!file) return;
+    formState.image = file.name;
+    uploadImage({ variables: { file } });
+  };
 
   const [addPost, { error }] = useMutation(ADD_POST, {
     update(cache, { data: { addPost } }) {
@@ -57,6 +68,7 @@ const PostForm = () => {
     event.preventDefault();
 console.log(formState)
    // try {
+    //  formState.image
       await addPost({
         variables: { ...formState },
       });
@@ -109,7 +121,9 @@ console.log(formState)
           />
         </div>
 
-        <UploadImage></UploadImage>
+        <div>
+            <input name={'document'} type={'file'} onChange={handleFileChange}/>
+        </div>
         <div className="col-12">
           <textarea
             name="caption"

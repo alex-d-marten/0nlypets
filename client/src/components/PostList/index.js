@@ -34,7 +34,7 @@ const PostList = ({ title }) => {
                   <Link to={`/post/${post._id}/editmode/`}>EDIT IT!!</Link>
                   <p className="card-header">{post.petName}</p>
                   <img
-                    src={post.image}
+                    src={`/static/images/${post.image}`}
                     class="card-img-top"
                     alt="cute pic here"
                   />
