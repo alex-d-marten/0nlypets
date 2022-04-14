@@ -85,10 +85,10 @@ console.log(formState)
 
   return (
     <div>
-      <h3>Show us your cute animal pictures</h3>
+      <h2>Show us your cute animal pictures</h2>
 
       <p
-        className={`m-0 ${
+        className={`m-0 mt-3 ${
           characterCount === 280 || error ? "text-danger" : ""
         }`}
       >
@@ -99,28 +99,28 @@ console.log(formState)
         className="flex-row justify-center justify-space-between-md align-center"
         onSubmit={handleFormSubmit}
       >
-        <div className="col-12">
+        <div className="col-12 col-md-4">
           <input
             name="petName"
             placeholder="What are the names of the pet pictured in the photo?"
             value={formState.petName}
-            className="form-input w-100"
+            className="form-input w-100 p-2"
             onChange={handleChange}
           />
         </div>
 
         <UploadImage></UploadImage>
-        <div className="col-12">
+        <div className="col-12 col-md-5 mt-3">
           <textarea
             name="caption"
             placeholder="Caption this photo..."
             value={formState.caption}
-            className="form-input w-100"
+            className="form-input w-100 p-2"
             style={{ lineHeight: "1.5" }}
             onChange={handleChange}
           ></textarea>
         </div>
-        <div className="col-12 col-lg-3">
+        <div className="col-12 col-lg-3 mt-3">
           <button  className="btn btn-primary btn-block py-3" type="submit">
             Post Pic
           </button>
