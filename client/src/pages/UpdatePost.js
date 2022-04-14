@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 //import Auth from "../utils/auth";
 import { useQuery } from "@apollo/client";
 import { QUERY_POST } from "../utils/queries";
+import { REMOVE_POST } from '../utils/mutations';
 
 //I hate to say it but I have no idea where the props for this are coming from
 const UpdatePost = (props) => {
@@ -15,9 +16,24 @@ const UpdatePost = (props) => {
 
   const post = data?.post || {};
 
+
+  const [removePost, { error }] = useMutation(REMOVE_POST);
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    console.log(postId)
+    await removePost({
+      variables: { postId },
+    });
+    window.location.href = '/profile'
+  };
+
+
+
   if (loading) {
     return <div>Loading...</div>;
   }
+
 
   return (
     <div>
@@ -33,6 +49,14 @@ const UpdatePost = (props) => {
           <p>{post.createdAt}</p>
         </div>
 
+        <div>
+         {Auth.loggedIn() ? ( 
+            <button className="btn btn-color" ontype="submit" onSubmit={handleFormSubmit}>
+            <i class="fa-solid fa-trash"></i>
+        </button>
+          )}
+          </div>
+    
         <div><CommentForm comments = {post.comments} /></div>
         
         <div><CommentList postId={post._id} /></div>
