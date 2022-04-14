@@ -99,7 +99,7 @@ const UpdatePostForm = () => {
 
   return (
     <div>
-      <h3>Updtae</h3>
+      <h3>Update</h3>
 
       <p
         className={`m-0 ${

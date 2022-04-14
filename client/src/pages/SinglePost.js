@@ -17,18 +17,18 @@ const SinglePost = () => {
   const { loading, data } = useQuery(postId ? QUERY_POST : "", {
     variables: { _id: postId, username: userParam },
   });
-  console.log(data);
 
   const post = data?.post || {};
+  console.log(post)
   const [removePost, { error }] = useMutation(REMOVE_POST);
 
-  const handleRemovePost = async (postId) => {
+  const handleRemovePost = async (event) => {
     console.log(postId);
-
     try {
       removePost({
         variables: { postId: postId },
       });
+      window.location.href="/"
     } catch (err) {
       console.error(err);
     }
@@ -58,8 +58,8 @@ const SinglePost = () => {
               </Link>
 
               <button
-                className="btn btn-delete"
-                onSubmit={handleRemovePost(post._id)}
+                className="btn btn-danger btn-delete"
+                onClick={handleRemovePost}
               >
                 Delete Post
               </button>
