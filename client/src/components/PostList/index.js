@@ -32,13 +32,17 @@ then upon click you can view caption/created at/add comment/and edit if logged i
                   <Link to={`/profile/${post.username}`} className="text-dark">
                     {post.username}
                   </Link>
-
+                  
                   <p className="card-header">{post.petName}</p>
+
+                  {/* code got overwritten & forgot what i originally wrote - wasn't able to test if this works */}
+                  <Link to={`profile/${post.username}/${post._id}`}>
                   <img
                     src={`${post.image}`}
                     class="card-img-top"
                     alt="cute pic here"
-                  />
+                  /></Link>
+                  
                 </div>
               </div>
             </div>
