@@ -61,14 +61,7 @@ const handleFileChange = async (e) => {
     <div>
       <h2>Show us your cute animal pictures</h2>
 
-      <p
-        className={`m-0 mt-3 ${
-          characterCount === 280 || error ? "text-danger" : ""
-        }`}
-      >
-        Character Count: {characterCount}/280
-        {error && <span className="ml-2">Something went wrong...</span>}
-      </p>
+      
       <form
         className="flex-row justify-center justify-space-between-md align-center"
         onSubmit={handleFormSubmit}
@@ -83,10 +76,18 @@ const handleFileChange = async (e) => {
           />
         </div>
 
-        <div>
+        <div className="mt-3">
             <input name={'document'} type={'file'} onChange={handleFileChange}/>
         </div>
         <div className="col-12 col-md-5 mt-3">
+        <p
+          className={`m-0 mt-3 ${
+            characterCount === 280 || error ? "text-danger" : ""
+          }`}
+        >
+          Character Count: {characterCount}/280
+          {error && <span className="ml-2">Something went wrong...</span>}
+        </p>
           <textarea
             name="caption"
             placeholder="Caption this photo..."
