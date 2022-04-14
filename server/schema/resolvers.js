@@ -3,6 +3,10 @@ const { User, Post } = require("../models");
 const { signToken } = require("../utils/auth");
 const { GraphQLUpload } = require("graphql-upload");
 const { finished } = require("stream/promises");
+require("dotenv").config();
+const cloudinary = require("cloudinary").v2;
+const fs = require("fs");
+let imageName;
 
 const resolvers = {
   Query: {
@@ -51,11 +55,31 @@ const resolvers = {
       const stream = createReadStream();
 
       // not sure if we need this, guide says it is for demo purposes but will have to play with this to decide if we need it
-      const out = require("fs").createWriteStream(
+      const out = fs.createWriteStream(
         `./uploadedFiles/${filename}`
       );
       stream.pipe(out);
       await finished(out);
+      imageName = filename;
+
+      cloudinary.uploader
+        .upload(`./uploadedFiles/${imageName}`, {
+            resource_type: "image",
+        })
+        .then((results) => {
+            console.log("Success!", JSON.stringify(results, null, 2));
+            console.log(results.secure_url)
+            let imageUrl = results.secure_url;
+            fs.writeFile(`../client/src/imageLink/index.js`, `const linkText = "${imageUrl}";\nmodule.exports = { linkText };`, err => {
+              if (err) {
+                console.error(err)
+                return
+              }
+            })
+        })
+        .catch((error) => {
+            console.log("Error!", JSON.stringify(error, null, 2));
+        })
 
       return { filename, mimetype, encoding };
     },
