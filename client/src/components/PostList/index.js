@@ -33,7 +33,7 @@ const PostList = ({ title }) => {
 
                   <p className="card-header">{post.petName}</p>
                   <img
-                    src={`/static/images/${post.image}`}
+                    src={`${post.image}`}
                     class="card-img-top"
                     alt="cute pic here"
                   />
