@@ -128,14 +128,6 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
-    // removeComment: async (parent, { postId, commentId }) => {
-    //   return Post.findOneAndUpdate(
-    //     { _id: postId },
-    //     { $pull: { comments: { _id: commentId } } },
-    //     { new: true }
-    //   );
-    // },
-
     addComment: async (parent, { postId, commentText }, context) => {
       if (context.user) {
         const updatedPost = await Post.findOneAndUpdate(
