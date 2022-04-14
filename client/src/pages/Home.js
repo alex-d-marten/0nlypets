@@ -18,7 +18,7 @@ const Home = () => {
   const loggedIn = true; //Auth.loggedIn();
 
   if (!Auth.loggedIn()) {
-    return <Redirect to="Signup"/>
+    return <Redirect to="Login"/>
   }
 
   return (
