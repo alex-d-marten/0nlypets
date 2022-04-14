@@ -12,6 +12,9 @@ const UpdatePostForm = () => {
     petName: "",
     caption: "",
   });
+  // const { user } = useQuery(userParam ? QUERY_USER : "", {
+  //   variables: { username: userParam },
+  // });
   const [characterCount, setCharacterCount] = useState(0);
   const { loading, data } = useQuery(postId ? QUERY_POST : "", {
     variables: { _id: postId, username: userParam },
@@ -19,38 +22,54 @@ const UpdatePostForm = () => {
   console.log(data, "post");
 
   const post = data?.post || {};
+  const [updatePost, { error }] = useMutation(
+    UPDATE_POST,
+    { variables: { _id: postId } },
+    {
+      update(cache, { data: { updatePost } }) {
+        try {
+          const { posts } = cache.readQuery({
+            query: QUERY_POSTS,
+            variables: { username: userParam },
+          });
+          console.log(posts);
 
-  const [updatePost, { error }] = useMutation(UPDATE_POST, {
-    update(cache, { data: { post } }) {
-      try {
-        console.log("im a console");
-        cache.writeQuery({
-          query: UPDATE_POST,
-          data: { posts: [updatePost, ...data] },
+          cache.writeQuery({
+            query: QUERY_POSTS,
+            variables: { username: userParam },
+            data: { posts: [updatePost, ...posts] },
+          });
+        } catch (e) {
+          console.error(e);
+        }
+        const { user } = cache.readQuery({
+          query: QUERY_USER,
+          variables: { username: userParam },
         });
-      } catch (e) {
-        console.error(e);
-      }
-    },
-  });
+        console.log(user, "user");
 
-  const [removePost, { error2 }] = useMutation(REMOVE_POST);
-  const handleDeletePost = async (postId) => {
-    // get token
-    // const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-    // if (!token) {
-    //   return false;
-    // }
-
-    try {
-      const { data } = await removePost({
-        variables: { postId },
-      });
-    } catch (err) {
-      console.log(err);
+        cache.writeQuery({
+          query: QUERY_USER,
+          data: { user: { ...user, posts: [...user.posts, updatePost] } },
+        });
+        console.log(data);
+      },
     }
-  };
+  );
+
+  // const [updatePost, { error }] = useMutation(UPDATE_POST, {
+  //   update(cache, { data: { post } }) {
+  //     try {
+  //       console.log("im a console");
+  //       cache.writeQuery({
+  //         query: U_POST,
+  //         data: { posts: [updatePost, ...data] },
+  //       });
+  //     } catch (e) {
+  //       console.error(e);
+  //     }
+  //   },
+  // });
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -79,6 +98,9 @@ const UpdatePostForm = () => {
       setFormState({ ...formState, [name]: value });
     }
   };
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
@@ -119,13 +141,7 @@ const UpdatePostForm = () => {
 
         <div className="col-12 col-lg-3">
           <button className="btn btn-primary btn-block py-3" type="submit">
-            UPDATE
-          </button>
-          <button
-            className="btn btn-primary btn-block py-3"
-            onClick={() => handleDeletePost(post._id)}
-          >
-            DELETE
+            Update
           </button>
         </div>
       </form>

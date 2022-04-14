@@ -6,7 +6,6 @@ import { ADD_POST } from "../../utils/mutations";
 import { QUERY_POSTS, QUERY_ME } from "../../utils/queries";
 import UploadImage from "../UploadImage";
 
-
 const PostForm = () => {
   const [formState, setFormState] = useState({
     petName: "",
@@ -19,7 +18,7 @@ const PostForm = () => {
     update(cache, { data: { addPost } }) {
       try {
         const { posts } = cache.readQuery({ query: QUERY_POSTS });
-        console.log(posts)
+        console.log(posts);
 
         cache.writeQuery({
           query: QUERY_POSTS,
@@ -29,12 +28,6 @@ const PostForm = () => {
         console.error(e);
       }
 
-      const { me } = cache.readQuery({ query: QUERY_ME });
-      console.log(me)
-      cache.writeQuery({
-          query: QUERY_ME,
-          data: { me: { ...me, posts: [...me.posts, addPost] } },
-      });
     },
   });
   //   I don't think this is the correct way to do a remove post because it doesnt take the id, I think we should make a remove post function to
@@ -55,18 +48,17 @@ const PostForm = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-console.log(formState)
-   // try {
-      await addPost({
-        variables: { ...formState },
-      });
-      // set location to home on submit
-       window.location.href="/"
-      setFormState({
-        petName: "",
-        image: "",
-        caption: "",
-      });
+    console.log(formState);
+    // try {
+    await addPost({
+      variables: { ...formState },
+    }); // set location to home on submit
+    window.location.href = "/";
+    setFormState({
+      petName: "",
+      image: "",
+      caption: "",
+    });
     // } catch (err) {
     //   console.error(err);
     // }
@@ -121,7 +113,7 @@ console.log(formState)
           ></textarea>
         </div>
         <div className="col-12 col-lg-3">
-          <button  className="btn btn-primary btn-block py-3" type="submit">
+          <button className="btn btn-primary btn-block py-3" type="submit">
             Post Pic
           </button>
         </div>
