@@ -76,7 +76,7 @@ const handleFileChange = async (e) => {
           />
         </div>
 
-        <div>
+        <div className="mt-3">
             <input name={'document'} type={'file'} onChange={handleFileChange}/>
         </div>
         <div className="col-12 col-md-5 mt-3">
