@@ -20,7 +20,7 @@ const CommentForm = () => {
 
     try {
       const { data } = await addComment({
-        variables: { postId,commentText },
+        variables: { postId, commentText },
       });
 
       // clear form value
@@ -35,12 +35,16 @@ const CommentForm = () => {
 
   return (
     <div>
-      <p
-        className={`m-0 ${characterCount === 400 || error ? "text-error" : ""}`}
-      >
-        Character Count: {characterCount}/400
-        {error && <span className="ml-2">Something went wrong...</span>}
-      </p>
+      <div className="mx-3">
+        <p
+          className={`m-0 ${
+            characterCount === 400 || error ? "text-error" : ""
+          }`}
+        >
+          Character Count: {characterCount}/400
+          {error && <span className="ml-2">Something went wrong...</span>}
+        </p>
+      </div>
       <form
         className="flex-row justify-center justify-space-between-md align-stretch"
         onSubmit={handleFormSubmit}
@@ -48,12 +52,11 @@ const CommentForm = () => {
         <textarea
           placeholder="Add comment..."
           value={commentText}
-          className="form-input col-12 col-md-9"
+          className="form-input mx-3 col-12 "
           onChange={handleChange}
         ></textarea>
-
-        <button className="btn btn-success col-12 col-md-3" type="submit">
-          Add
+        <button className="btn btn-color m-3" type="submit">
+          Add Comment
         </button>
       </form>
 
