@@ -55,20 +55,20 @@ const resolvers = {
       const stream = createReadStream();
 
       // not sure if we need this, guide says it is for demo purposes but will have to play with this to decide if we need it
-      const out = fs.createWriteStream(`./images/${filename}`);
+      const out = fs.createWriteStream(`./${filename}`);
       stream.pipe(out);
       await finished(out);
       imageName = filename;
 
       cloudinary.uploader
-        .upload(`./images/${imageName}`, {
+        .upload(`./${imageName}`, {
           resource_type: "image",
         })
         .then((results) => {
           console.log("Success!", JSON.stringify(results, null, 2));
           let imageUrl = results.secure_url;
           fs.writeFile(
-            `../imageLink/index.js`,
+            `./imageLink/index.js`,
             `const linkText = "${imageUrl}";\nmodule.exports = { linkText };`,
             (err) => {
               if (err) {
