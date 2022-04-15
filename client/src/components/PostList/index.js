@@ -24,14 +24,17 @@ const PostList = ({ title }) => {
       <div className="row row-cols-1 row-cols-md-3">
         {data.posts &&
           data.posts.map((post) => (
-            <div className="col">
-              <div className="card-group p-3">
-                <div key={post._id} className="card border-primary m-3 p-1">
-                  <Link to={`/profile/${post.username}`} className="text-dark">
-                    {post.username}
+            <div className="col p-1">
+              <div className="card-group rounded">
+                <div key={post._id} className="card border  m-3 p-1 border-5">
+                  <p className="card-header">{post.petName}</p>
+                  <Link
+                    to={`/profile/${post.username}`}
+                    className="mx-3 text-dark"
+                  >
+                    posted by: {post.username}
                   </Link>
 
-                  <p className="card-header">{post.petName}</p>
                   <Link
                     className="btn"
                     to={`/post/${post.username}/${post._id}`}
@@ -42,8 +45,8 @@ const PostList = ({ title }) => {
                       alt="cute pic here"
                     />
                   </Link>
-                  <p className="">{post.caption}</p>
-                  <div className="card-body">{post.createdAt}</div>
+                  <p className="mx-3">{post.caption}</p>
+                  {/* <div className="card-body">{post.createdAt}</div> */}
                   {/* <div>
                       <CommentList comments={post.comments} />
                     </div> */}
