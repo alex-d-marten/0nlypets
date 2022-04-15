@@ -27,10 +27,10 @@ SO THAT I can post cute pictures of that pet and network with other passionate p
 Bootstrap, MongoDB, Heroku, Mongoose, React.js, Node.js, and Express.js, GraphQL, Apollo.  
 
 ## Screenshot 
-
+![only pets homepage](./images/Capture.PNG)
 
 ## Demo
-
+https://young-eyrie-81624.herokuapp.com/
 
 ## Usage
 - Create an account on **0nlyPets**  
