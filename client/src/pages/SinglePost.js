@@ -25,7 +25,7 @@ const SinglePost = () => {
       removePost({
         variables: { postId: postId },
       });
-      window.location.href="/"
+      window.location.href = "/";
     } catch (err) {
       console.error(err);
     }
@@ -50,11 +50,11 @@ const SinglePost = () => {
           {Auth.getProfile().data.username === userParam ? (
             <>
               <Link to={`/post/${post.username}/${post._id}/editmode/`}>
-                <button className="btn btn-color">Edit Post</button>
+                <button className="btn btn-color mx-1">Edit Post</button>
               </Link>
 
               <button
-                className="btn btn-danger btn-delete"
+                className="btn btn-color mx-1 btn-delete"
                 onClick={handleRemovePost}
               >
                 Delete Post
