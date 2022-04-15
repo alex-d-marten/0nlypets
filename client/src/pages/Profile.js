@@ -32,13 +32,8 @@ const Profile = () => {
 
   return (
     <div>
-      <div className="flex-row mb-3">
-        <h2 className="bg-dark text-secondary p-3 display-inline-block">
-          Viewing {userParam ? `${user.username}'s` : "your"} profile.
-        </h2>
-      </div>
-
-      <div className="flex-row justify-space-between mb-3">
+      
+      <div className="flex-row mb-3 text-center">
         <div className="col-12 mb-3 col-lg-12">
           <PostList title={`${userParam}'s pet posts...`} />
         </div>
