@@ -4,7 +4,7 @@ import { ADD_POST, UPLOAD_FILE } from "../../utils/mutations";
 //import { REMOVE_POST } from "../../utils/mutations";
 import { QUERY_POSTS, QUERY_ME } from "../../utils/queries";
 import UploadImage from "../UploadImage";
-import { linkText } from "../../../imageLink/index.js";
+import { linkText } from "../../imageLink/index.js";
 
 const PostForm = () => {
   const [formState, setFormState] = useState({
