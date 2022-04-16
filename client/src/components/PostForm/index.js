@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_POST, UPLOAD_FILE } from "../../utils/mutations";
-//import { REMOVE_POST } from "../../utils/mutations";
-import { QUERY_POSTS, QUERY_ME } from "../../utils/queries";
-import UploadImage from "../UploadImage";
-import { linkText } from "../../imageLink/index.js";
+// import { linkText } from "../../imageLink/index.js";
 
 const PostForm = () => {
   const [formState, setFormState] = useState({
@@ -17,7 +14,7 @@ const PostForm = () => {
   const [uploadImage] = useMutation(UPLOAD_FILE, {
     onCompleted: (data) => console.log(data),
 });
-const handleFileChange = async (e) => {
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
     await uploadImage({ variables: { file } });
@@ -27,9 +24,6 @@ const handleFileChange = async (e) => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-  
-    formState.image = linkText;
-    
       await addPost({
         variables: { ...formState },
       });
@@ -40,9 +34,6 @@ const handleFileChange = async (e) => {
         image: "",
         caption: "",
       });
-    // } catch (err) {
-    //   console.error(err);
-    // }
   };
 
   const handleChange = (event) => {
@@ -101,11 +92,6 @@ const handleFileChange = async (e) => {
             Post Pic
           </button>
         </div>
-        {/* {error && (
-          <div className="col-12 my-3 bg-danger text-white p-3">
-            Something went wrong...
-          </div>
-        )} */}
       </form>
     </div>
   );
