@@ -6,7 +6,8 @@ const { finished } = require("stream/promises");
 require("dotenv").config();
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
-let imageName;
+let fileName;
+let imageUrl;
 
 const resolvers = {
   Query: {
@@ -50,37 +51,16 @@ const resolvers = {
   Mutation: {
     singleUpload: async (parent, { file }) => {
       const { createReadStream, filename, mimetype, encoding } = await file;
-
       // invoke the `createReadStream` as this will return a Readable stream.
       const stream = createReadStream();
 
       // not sure if we need this, guide says it is for demo purposes but will have to play with this to decide if we need it
-      const out = fs.createWriteStream(`./uploadedFiles/${filename}`);
+      const out = fs.createWriteStream(`./${filename}`);
       stream.pipe(out);
       await finished(out);
       imageName = filename;
+      fileName = filename;
 
-      cloudinary.uploader
-        .upload(`./uploadedFiles/${imageName}`, {
-          resource_type: "image",
-        })
-        .then((results) => {
-          console.log("Success!", JSON.stringify(results, null, 2));
-          let imageUrl = results.secure_url;
-          fs.writeFile(
-            `../client/src/imageLink/index.js`,
-            `const linkText = "${imageUrl}";\nmodule.exports = { linkText };`,
-            (err) => {
-              if (err) {
-                console.error(err);
-                return;
-              }
-            }
-          );
-        })
-        .catch((error) => {
-          console.log("Error!", JSON.stringify(error, null, 2));
-        });
 
       return { filename, mimetype, encoding };
     },
@@ -111,6 +91,21 @@ const resolvers = {
 
     addPost: async (parent, args, context) => {
       if (context.user) {
+        await cloudinary.uploader
+        .upload(`./${fileName}`, {
+          resource_type: "image",
+        })
+        .then(async (results) => {
+          console.log("Success!", JSON.stringify(results, null, 2));
+          
+          imageUrl = results.secure_url;
+          args.image = imageUrl;
+        })
+        .catch((error) => {
+          console.error(error)
+          console.log("Error!", JSON.stringify(error, null, 2));
+        });
+
         const post = await Post.create({
           ...args,
           username: context.user.username,
