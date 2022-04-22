@@ -137,6 +137,11 @@ a {
 /* media queries */
 
 @media only screen and (max-width: 1000px) {
+
+  .header-a{
+    width: 100%;
+  }
+  
   .flex-container {
     flex-wrap: wrap;
     justify-content: center;

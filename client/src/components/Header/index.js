@@ -7,7 +7,7 @@ function Header({ currentPage, setCurrentPage }) {
     <header className="top-header">
       <div className="flex-container">
         {Auth.loggedIn() ? (
-          <Link to={`/`} className="custom-a">
+          <Link to={`/`} className="custom-a header-a">
             <h1 className="head-1">OnlyPets</h1>
           </Link>
         ) : (
