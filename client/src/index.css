@@ -107,6 +107,10 @@ a {
   background-color: rgb(189, 228, 181);
 }
 
+.larger-font{
+  font-size: 2rem;
+}
+
 .login-main {
   position: absolute;
   top: 50%;
@@ -119,6 +123,15 @@ a {
 
 .card-header{
   background-color: rgb(189, 228, 181);
+  font-size: 1.5rem;
+}
+
+.single-header{
+  font-size: 2.5rem;
+}
+
+.w-40{
+  width: 40%;
 }
 
 /* media queries */
@@ -127,6 +140,10 @@ a {
   .flex-container {
     flex-wrap: wrap;
     justify-content: center;
+  }
+
+  .single-img{
+    width: 100% !important;
   }
 
   .main-section {

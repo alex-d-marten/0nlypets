@@ -38,14 +38,18 @@ const SinglePost = () => {
   return (
     <div>
       <div className="card mb-3">
-        <p className="card-header">
+        <h2 className="card-header single-header">
           <span style={{ fontWeight: 700 }} className="text-dark">
             {post.petName}
           </span>
-        </p>
+        </h2>
         <div className="card-body">
-          <img src={`${post.image}`} class="card-img-top" alt="cute pic here" />
-          <p> {post.caption} </p>
+
+          <div className="w-100 d-flex justify-content-center">
+            <img src={`${post.image}`} className="w-50 single-img" alt="cute pic here" />
+          </div>
+      
+          <p className="larger-font">{post.caption}</p>
           <p>{post.createdAt}</p>
           {Auth.getProfile().data.username === userParam ? (
             <>

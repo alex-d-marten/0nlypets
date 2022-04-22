@@ -49,12 +49,14 @@ const CommentForm = () => {
         className="flex-row justify-center justify-space-between-md align-stretch"
         onSubmit={handleFormSubmit}
       >
-        <textarea
-          placeholder="Add comment..."
-          value={commentText}
-          className="form-input mx-3 col-12 "
-          onChange={handleChange}
-        ></textarea>
+        <div className="w-100">
+          <textarea
+            placeholder="Add comment..."
+            value={commentText}
+            className="form-input mx-3 w-75"
+            onChange={handleChange}
+          ></textarea>
+        </div>
         <button className="btn btn-color m-3" type="submit">
           Add Comment
         </button>
